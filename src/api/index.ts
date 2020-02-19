@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import compression from 'compression';
 import 'express-async-errors'; // handle all async errors and send them to error middleware.
 
-import errorMiddleware from './middlewares/error';
+import errorMiddleware from './middlewares/errorMiddleware';
 import authRouter from './routes/authRouter';
 import userRouter from './routes/userRouter';
 import patientRouter from './routes/patientRouter';
