@@ -4,6 +4,7 @@ export enum Errors {
   InvalidValue = 'err_invalid_value_for_',
 
   //routes:
+  FieldRequired = '{0}_required',
   MissingFields = 'err_missing_fields',
   AllFieldsRequired = 'err_all_fields_are_required',
   UserNotExist = 'err_user_does_not_exist',
