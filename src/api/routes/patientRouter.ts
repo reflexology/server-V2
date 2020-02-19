@@ -2,8 +2,9 @@ import { isObjectEmpty } from '../../utils/common';
 import express from 'express';
 import { IPatient } from '../../models/patient';
 import { patientManager } from '../../managers';
-import auth from '../middlewares/auth';
+import auth from '../middlewares/authMiddleware';
 import { Errors } from '../../utils/errors';
+import hasFields from '../middlewares/hasFieldMiddleware';
 
 const router = express.Router();
 
@@ -32,15 +33,15 @@ router.get('/:id', async function(req, res) {
  * Private
  * Add patient
  */
-router.post('/', auth, async function(req, res) {
-  const { title }: IPatient = req.body;
-
-  //Simple validation
-  if (!title) return res.status(400).json({ msg: Errors.TitleRequired });
-
-  const patient = await patientManager.createPatient({ title });
-  res.status(201).json(patient);
-});
+router.post(
+  '/',
+  auth,
+  hasFields<IPatient>(['firstName', 'lastName', 'createdBy']),
+  async (req, res) => {
+    const patient = await patientManager.createPatient(req.body);
+    res.status(201).json(patient);
+  }
+);
 
 /**
  * PATCH /api/patient/:id
