@@ -4,3 +4,7 @@ declare namespace CookieSessionInterfaces {
     hasBeenHere: boolean;
   }
 }
+
+interface String {
+  format: (...values: string[]) => string;
+}

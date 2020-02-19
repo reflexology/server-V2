@@ -18,3 +18,13 @@ export enum Errors {
   LastNameRequired = 'err_first_name_required',
   CreatedByRequired = 'err_created_by_required'
 }
+
+String.prototype.format = function(...values) {
+  let str = this.toString();
+  console.log(values);
+
+  if (values?.length > 0)
+    for (const key in values) str = str.replace(new RegExp('\\{' + key + '\\}', 'gi'), values[key]);
+
+  return str;
+};
