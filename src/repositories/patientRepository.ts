@@ -1,7 +1,7 @@
 import Patient, { IPatient } from '../models/patient';
 
 export function getPatients() {
-  return Patient.find();
+  return Patient.find().sort({ lastTreatment: -1 });
 }
 
 export function getPatientById(id: string) {
