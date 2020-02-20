@@ -39,9 +39,9 @@ router.get('/:id', async function(req, res) {
 router.post(
   '/',
   auth,
-  hasFields<IPatient>(['firstName', 'lastName', 'createdBy']),
+  hasFields<IPatient>(['firstName', 'lastName']),
   async (req, res) => {
-    const patient = await patientManager.createPatient(req.body);
+    const patient = await patientManager.createPatient({ ...req.body, createdBy: req.user._id });
     res.status(201).json(patient);
   }
 );
