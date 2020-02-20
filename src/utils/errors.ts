@@ -11,6 +11,7 @@ export enum Errors {
   UserAlreadyRegistered = 'err_user_already_registered',
   InvalidPassword = 'err_invalid_password',
   TitleRequired = 'err_title_required',
+  PatientNotExist = 'err_patient_does_not_exist',
 
   //models:
   UserNameRequired = 'err_username_required',
