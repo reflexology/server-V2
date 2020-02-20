@@ -1,5 +1,5 @@
 import express from 'express';
-import { IPatient } from '../../models/patient';
+import { IPatient } from '../../models/patientModel';
 import { patientManager } from '../../managers';
 import auth from '../middlewares/authMiddleware';
 import { Errors } from '../../utils/errors';

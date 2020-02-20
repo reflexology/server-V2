@@ -1,5 +1,5 @@
 import { patientRepository } from '../repositories';
-import { IPatient } from '../models/patient';
+import { IPatient } from '../models/patientModel';
 
 export function getPatients() {
   return patientRepository.getPatients();

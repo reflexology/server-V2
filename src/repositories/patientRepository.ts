@@ -1,4 +1,4 @@
-import Patient, { IPatient } from '../models/patient';
+import Patient, { IPatient } from '../models/patientModel';
 
 export function getPatients() {
   return Patient.find().sort({ lastTreatment: -1 });
