@@ -18,7 +18,10 @@ export enum Errors {
   PasswordRequired = 'err_password_required',
   FirstNameRequired = 'err_first_name_required',
   LastNameRequired = 'err_first_name_required',
-  CreatedByRequired = 'err_created_by_required'
+  CreatedByRequired = 'err_created_by_required',
+
+  // treatment
+  TreatmentNumberRequired = 'err_treatment_number_required'
 }
 
 String.prototype.format = function(...values) {
