@@ -1,4 +1,9 @@
-import * as userRepository from './userRepository';
-import * as patientRepository from './patientRepository';
+import PatientRepository from './patientRepository';
+import TreatmentRepository from './treatmentRepository';
+import UserRepository from './userRepository';
 
-export { userRepository, patientRepository };
+const patientRepository = new PatientRepository();
+const treatmentRepository = new TreatmentRepository();
+const userRepository = new UserRepository();
+
+export { userRepository, patientRepository, treatmentRepository };

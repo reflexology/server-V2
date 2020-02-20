@@ -1,13 +1,14 @@
-import User, { IUser } from './../models/userModel';
+import User, { IUser, IUserDocument } from '../models/userModel';
+import BaseRepository from './baseRepository';
 
-export function createUser(user: IUser) {
-  return User.create(user);
+class UserRepository extends BaseRepository<IUserDocument, IUser> {
+  constructor() {
+    super(User);
+  }
+
+  getOneByUsername(username: string) {
+    return User.findOne({ username });
+  }
 }
 
-export function getUserById(id: string) {
-  return User.findById(id);
-}
-
-export function getUserByUsername(username: string) {
-  return User.findOne({ username });
-}
+export default UserRepository;
