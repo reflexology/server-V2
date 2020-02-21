@@ -32,6 +32,6 @@ export const patientSchema = new Schema({
   maritalStatus: { type: String, enum: ['Married', 'Single', 'Divorced', 'Widowed'] }
 });
 
-const Patient = model<IPatientDocument>(Consts.db.patientsTableName, patientSchema, Consts.db.patientsTableName);
+const Patient = model<IPatientDocument>(Consts.db.patientTableName, patientSchema, Consts.db.patientTableName);
 
 export default Patient;

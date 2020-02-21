@@ -40,9 +40,9 @@ export const treatmentSchema = new Schema({
 });
 
 const Treatment = model<ITreatmentDocument>(
-  Consts.db.TreatmentsTableName,
+  Consts.db.TreatmentTableName,
   treatmentSchema,
-  Consts.db.TreatmentsTableName
+  Consts.db.TreatmentTableName
 );
 
 export default Treatment;

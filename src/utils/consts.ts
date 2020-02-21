@@ -1,8 +1,8 @@
 const Consts = {
   db: {
     userTableName: 'Users',
-    patientsTableName: 'patients',
-    TreatmentsTableName: 'treatments',
+    patientTableName: 'Patients',
+    TreatmentTableName: 'Treatments',
     DiagnosisTableName: 'Diagnoses'
   }
 };
