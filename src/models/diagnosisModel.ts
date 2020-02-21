@@ -1,14 +1,17 @@
-import { Document, model, Schema } from 'mongoose';
+import mongoose, { Document, model, Schema } from 'mongoose';
+import { Errors } from './../utils/errors';
 import Consts from '../utils/consts';
 
 export interface IDiagnosis {
   name: string;
+  createdBy: string;
 }
 
 export interface IDiagnosisDocument extends Document, IDiagnosis {}
 
 export const diagnosisSchema = new Schema({
-  name: { type: String, trim: true }
+  name: { type: String, trim: true },
+  createdBy: { type: mongoose.Schema.Types.ObjectId, required: [true, Errors.CreatedByRequired] }
 });
 
 const Diagnosis = model<IDiagnosisDocument>(
