@@ -3,7 +3,8 @@ const Consts = {
     userTableName: 'Users',
     patientTableName: 'Patients',
     TreatmentTableName: 'Treatments',
-    DiagnosisTableName: 'Diagnoses'
+    DiagnosisTableName: 'Diagnoses',
+    IncomeAndExpenditureTableName: 'IncomesAndExpenditures'
   }
 };
 

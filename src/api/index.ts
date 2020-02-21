@@ -11,6 +11,7 @@ import userRouter from './routes/userRouter';
 import patientRouter from './routes/patientRouter';
 import treatmentRouter from './routes/treatmentRouter';
 import diagnosisRouter from './routes/diagnosisRouter';
+import incomeAndExpenditureRouter from './routes/incomeAndExpenditureRouter';
 
 function initMiddlewares(app: express.Application) {
   // Enable Cross Origin Resource Sharing to all origins by default
@@ -41,6 +42,7 @@ function initRoutes(app: express.Application) {
   app.use('/api/patient', patientRouter);
   app.use('/api/treatment', treatmentRouter);
   app.use('/api/diagnosis', diagnosisRouter);
+  app.use('/api/incomeAndExpenditure', incomeAndExpenditureRouter);
   app.use(errorMiddleware);
 }
 
