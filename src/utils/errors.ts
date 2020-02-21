@@ -13,6 +13,7 @@ export enum Errors {
   TitleRequired = 'err_title_required',
   PatientNotExist = 'err_patient_does_not_exist',
   TreatmentNotExist = 'err_treatment_does_not_exist',
+  DiagnosisNotExist = 'err_diagnosis_does_not_exist',
 
   //models:
   UserNameRequired = 'err_username_required',

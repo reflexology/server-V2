@@ -2,7 +2,8 @@ const Consts = {
   db: {
     userTableName: 'Users',
     patientsTableName: 'patients',
-    TreatmentsTableName: 'treatments'
+    TreatmentsTableName: 'treatments',
+    DiagnosisTableName: 'Diagnoses'
   }
 };
 
