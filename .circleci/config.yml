@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  heroku: circleci/heroku@1.0.1
 jobs:
   build:
     executor:
@@ -17,6 +18,12 @@ jobs:
                 name: 'Build'
                 command: yarn run build
 workflows:
-  build:
+  build_deploy:
     jobs:
       - build
+      - heroku/deploy-via-git:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
