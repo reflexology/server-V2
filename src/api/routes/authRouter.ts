@@ -9,7 +9,7 @@ const router = express.Router();
  * Public
  * return new access and refresh tokens
  */
-router.post('/refreshToken', async (req, res) => {
+router.post<never, Tokens, { refreshToken: string }>('/refreshToken', async (req, res) => {
   try {
     const decoded = jwtService.validateRefreshToken(req.body.refreshToken);
 

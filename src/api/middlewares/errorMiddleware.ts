@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express-serve-static-core';
 import mongoose from 'mongoose';
 import logger from '../../utils/logger';
 import { Errors } from '../../utils/errors';
@@ -6,7 +6,7 @@ import { Errors } from '../../utils/errors';
 // Error middleware
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function(err: any, req: Request, res: Response, next: NextFunction) {
+export default function(err: any, req: Request, res: Response<ResErr>, next: NextFunction) {
   if (err && err instanceof mongoose.Error.ValidationError && err.errors) {
     const firstError = err.errors[Object.keys(err.errors)[0]];
     if (firstError instanceof mongoose.Error.CastError)

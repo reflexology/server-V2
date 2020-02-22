@@ -13,7 +13,7 @@ const router = express.Router();
  * Public
  * get all diagnoses
  */
-router.get('/', async function(req, res) {
+router.get<never, IDiagnosis[], IDiagnosis>('/', async function(req, res) {
   const diagnoses = await diagnosisManager.getDiagnoses();
   res.status(200).json(diagnoses);
 });
@@ -23,7 +23,7 @@ router.get('/', async function(req, res) {
  * Public
  * get diagnosis by id
  */
-router.get('/:id', async function(req, res) {
+router.get<IdParam, IDiagnosis | ResErr, IDiagnosis>('/:id', async function(req, res) {
   const diagnosis = await diagnosisManager.getDiagnosisById(req.params.id);
 
   if (!diagnosis) return res.status(400).json({ msg: Errors.DiagnosisNotExist });
@@ -36,7 +36,7 @@ router.get('/:id', async function(req, res) {
  * Private
  * Add diagnosis
  */
-router.post(
+router.post<never, IDiagnosis, IDiagnosis>(
   '/',
   auth,
   hasFields<IDiagnosis>(['name']),
@@ -51,7 +51,7 @@ router.post(
  * Private
  * Edit diagnosis
  */
-router.patch('/:id', auth, hasBody, async function(req, res) {
+router.patch<IdParam, IDiagnosis, IDiagnosis>('/:id', auth, hasBody, async function(req, res) {
   const diagnosis = await diagnosisManager.updateDiagnosis(req.params.id, req.body);
   res.status(200).json(diagnosis);
 });
@@ -61,7 +61,7 @@ router.patch('/:id', auth, hasBody, async function(req, res) {
  * Private
  * Delete diagnosis
  */
-router.delete('/:id', auth, async function(req, res) {
+router.delete<IdParam, IDiagnosis | ResErr, IDiagnosis>('/:id', auth, async function(req, res) {
   const diagnosis = await diagnosisManager.deleteDiagnosis(req.params.id);
 
   if (!diagnosis) return res.status(400).json({ msg: Errors.DiagnosisNotExist });

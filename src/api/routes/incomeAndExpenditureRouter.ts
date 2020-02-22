@@ -13,7 +13,7 @@ const router = express.Router();
  * Public
  * get all incomesAndExpenditures
  */
-router.get('/', async function(req, res) {
+router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async function(req, res) {
   const incomesAndExpenditures = await incomeAndExpenditureManager.getIncomesAndExpenditures();
   res.status(200).json(incomesAndExpenditures);
 });
@@ -23,7 +23,7 @@ router.get('/', async function(req, res) {
  * Public
  * get incomeAndExpenditure by id
  */
-router.get('/:id', async function(req, res) {
+router.get<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id', async function(req, res) {
   const incomeAndExpenditure = await incomeAndExpenditureManager.getIncomeAndExpenditureById(req.params.id);
 
   if (!incomeAndExpenditure) return res.status(400).json({ msg: Errors.IncomeAndExpenditureNotExist });
@@ -36,7 +36,7 @@ router.get('/:id', async function(req, res) {
  * Private
  * Add incomeAndExpenditure
  */
-router.post(
+router.post<never, IIncomeAndExpenditure, IIncomeAndExpenditure>(
   '/',
   auth,
   hasFields<IIncomeAndExpenditure>(['price']),
@@ -54,7 +54,7 @@ router.post(
  * Private
  * Edit incomeAndExpenditure
  */
-router.patch('/:id', auth, hasBody, async function(req, res) {
+router.patch<IdParam, IIncomeAndExpenditure, IIncomeAndExpenditure>('/:id', auth, hasBody, async function(req, res) {
   const incomeAndExpenditure = await incomeAndExpenditureManager.updateIncomeAndExpenditure(req.params.id, req.body);
   res.status(200).json(incomeAndExpenditure);
 });
@@ -64,7 +64,7 @@ router.patch('/:id', auth, hasBody, async function(req, res) {
  * Private
  * Delete incomeAndExpenditure
  */
-router.delete('/:id', auth, async function(req, res) {
+router.delete<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id', auth, async function(req, res) {
   const incomeAndExpenditure = await incomeAndExpenditureManager.deleteIncomeAndExpenditure(req.params.id);
 
   if (!incomeAndExpenditure) return res.status(400).json({ msg: Errors.IncomeAndExpenditureNotExist });

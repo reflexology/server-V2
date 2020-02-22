@@ -4,6 +4,7 @@ import { userManager } from '../../managers';
 import * as jwtService from '../../services/jwtService';
 import auth from '../middlewares/authMiddleware';
 import { Errors } from '../../utils/errors';
+import { IUser } from '../../models/userModel';
 
 const router = express.Router();
 
@@ -12,8 +13,8 @@ const router = express.Router();
  * Public
  * Login with username and password
  */
-router.post('/login', async function(req, res) {
-  const { username, password }: { username: string; password: string } = req.body;
+router.post<never, Tokens | ResErr, IUser>('/login', async function(req, res) {
+  const { username, password } = req.body;
 
   // Simple validation
   if (!username || !password) return res.status(400).json({ msg: Errors.AllFieldsRequired });
@@ -37,8 +38,8 @@ router.post('/login', async function(req, res) {
  * Private
  * Creates new user and return tokens
  */
-router.post('/register', auth, async (req, res) => {
-  const { username, password }: { username: string; password: string } = req.body;
+router.post<never, Tokens | ResErr, IUser>('/register', auth, async (req, res) => {
+  const { username, password } = req.body;
 
   // Simple validation
   if (!username || !password) return res.status(400).json({ msg: Errors.AllFieldsRequired });

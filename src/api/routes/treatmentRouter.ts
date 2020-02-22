@@ -13,7 +13,7 @@ const router = express.Router();
  * Public
  * get all treatments
  */
-router.get('/', async function(req, res) {
+router.get<never, ITreatment[], ITreatment>('/', async function(req, res) {
   const treatments = await treatmentManager.getTreatments();
   res.status(200).json(treatments);
 });
@@ -23,7 +23,7 @@ router.get('/', async function(req, res) {
  * Public
  * get treatment by id
  */
-router.get('/:id', async function(req, res) {
+router.get<IdParam, ITreatment | ResErr, ITreatment>('/:id', async function(req, res) {
   const treatment = await treatmentManager.getTreatmentById(req.params.id);
 
   if (!treatment) return res.status(400).json({ msg: Errors.TreatmentNotExist });
@@ -36,7 +36,7 @@ router.get('/:id', async function(req, res) {
  * Private
  * Add treatment
  */
-router.post(
+router.post<never, ITreatment, ITreatment>(
   '/',
   auth,
   hasFields<ITreatment>(['treatmentNumber']),
@@ -51,7 +51,7 @@ router.post(
  * Private
  * Edit treatment
  */
-router.patch('/:id', auth, hasBody, async function(req, res) {
+router.patch<IdParam, ITreatment, ITreatment>('/:id', auth, hasBody, async function(req, res) {
   const treatment = await treatmentManager.updateTreatment(req.params.id, req.body);
   res.status(200).json(treatment);
 });
@@ -61,7 +61,7 @@ router.patch('/:id', auth, hasBody, async function(req, res) {
  * Private
  * Delete treatment
  */
-router.delete('/:id', auth, async function(req, res) {
+router.delete<IdParam, ITreatment | ResErr, ITreatment>('/:id', auth, async function(req, res) {
   const treatment = await treatmentManager.deleteTreatment(req.params.id);
 
   if (!treatment) return res.status(400).json({ msg: Errors.TreatmentNotExist });
