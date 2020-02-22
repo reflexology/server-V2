@@ -1,4 +1,4 @@
-import { IIncomeAndExpenditure } from '../models/IncomeAndExpenditureModel';
+import { IIncomeAndExpenditure } from '../models/incomeAndExpenditureModel';
 import { incomeAndExpenditureRepository } from '../repositories';
 
 export function getIncomesAndExpenditures() {

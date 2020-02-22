@@ -1,4 +1,4 @@
-import { IDiagnosis } from '../models/DiagnosisModel';
+import { IDiagnosis } from '../models/diagnosisModel';
 import { diagnosisRepository } from '../repositories';
 
 export function getDiagnoses() {
