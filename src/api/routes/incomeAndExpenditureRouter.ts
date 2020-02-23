@@ -39,7 +39,7 @@ router.get<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id
 router.post<never, IIncomeAndExpenditure, IIncomeAndExpenditure>(
   '/',
   auth,
-  hasFields<IIncomeAndExpenditure>(['price']),
+  hasFields<IIncomeAndExpenditure>(['amount', 'description']),
   async (req, res) => {
     const incomeAndExpenditure = await incomeAndExpenditureManager.createIncomeAndExpenditure({
       ...req.body,
