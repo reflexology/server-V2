@@ -13,6 +13,7 @@ export interface IPatient {
   createdAt?: Date;
   createdBy: string;
   lastTreatment?: Date;
+  gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
 }
 
@@ -29,6 +30,7 @@ export const patientSchema = new Schema({
   createdAt: { type: Date, default: Date.now },
   createdBy: { type: mongoose.Schema.Types.ObjectId, required: [true, Errors.CreatedByRequired] },
   lastTreatment: { type: Date },
+  gender: { type: String, enum: ['Male', 'Female'] },
   maritalStatus: { type: String, enum: ['Married', 'Single', 'Divorced', 'Widowed'] }
 });
 
