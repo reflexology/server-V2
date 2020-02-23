@@ -3,9 +3,9 @@ import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
 
 export interface IIncomeAndExpenditure {
-  expenditure?: string;
-  income?: string;
-  price: number;
+  description: string;
+  note?: string;
+  amount: number;
   createdAt?: Date;
   createdBy: string;
 }
@@ -13,9 +13,9 @@ export interface IIncomeAndExpenditure {
 export interface IIncomeAndExpenditureDocument extends Document, IIncomeAndExpenditure {}
 
 export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditure>({
-  expenditure: { type: String, trim: true },
-  income: { type: String, trim: true },
-  price: { type: Number, required: true },
+  description: { type: String, trim: true, required: [true, Errors.IncomeOrExpenseDescriptionRequired] },
+  note: { type: String, trim: true },
+  amount: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
   createdBy: { type: mongoose.Schema.Types.ObjectId, required: [true, Errors.CreatedByRequired] }
 });

@@ -21,6 +21,7 @@ export enum Errors {
   PasswordRequired = 'err_password_required',
   FirstNameRequired = 'err_first_name_required',
   LastNameRequired = 'err_first_name_required',
+  IncomeOrExpenseDescriptionRequired = 'err_income_or_expense_description_required',
   CreatedByRequired = 'err_created_by_required',
 
   // treatment
