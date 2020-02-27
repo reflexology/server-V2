@@ -5,6 +5,10 @@ class TreatmentRepository extends BaseRepository<ITreatmentDocument, ITreatment>
   constructor() {
     super(Treatment);
   }
+
+  getTreatmentsByPatientId(patientId: string) {
+    return Treatment.find({ patientId });
+  }
 }
 
 export default TreatmentRepository;

@@ -18,6 +18,16 @@ router.get<never, ITreatment[], ITreatment>('/', async function(req, res) {
 });
 
 /**
+ * Get /api/treatment/byPatientId:patientId
+ * Private
+ * get all treatments by patient id
+ */
+router.get<{ patientId: string }, ITreatment[], ITreatment>('/byPatientId:patientId', async function(req, res) {
+  const treatments = await treatmentManager.getTreatmentsByPatientId(req.params.patientId);
+  res.status(200).json(treatments);
+});
+
+/**
  * Get /api/treatment/:id
  * Private
  * get treatment by id

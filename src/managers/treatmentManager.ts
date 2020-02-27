@@ -4,6 +4,9 @@ import { ITreatment } from '../models/treatmentModel';
 export function getTreatments() {
   return treatmentRepository.getAll();
 }
+export function getTreatmentsByPatientId(patientId: string) {
+  return treatmentRepository.getTreatmentsByPatientId(patientId);
+}
 
 export function getTreatmentById(id: string) {
   return treatmentRepository.getOneById(id);
