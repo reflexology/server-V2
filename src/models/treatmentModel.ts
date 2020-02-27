@@ -36,7 +36,7 @@ export const treatmentSchema = new Schema({
   isReminderCompleted: { type: Boolean, default: false },
   patientId: { type: mongoose.Schema.Types.ObjectId, required: true }, // TODO add error message
   createdBy: { type: mongoose.Schema.Types.ObjectId, required: true }, // TODO add error message
-  tags: [String]
+  diagnosis: [String]
 });
 
 const Treatment = model<ITreatmentDocument>(
