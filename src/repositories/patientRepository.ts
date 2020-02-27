@@ -5,6 +5,10 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
   constructor() {
     super(Patient);
   }
+
+  getAllByUser(userId: string) {
+    return Patient.find({ createdBy: userId });
+  }
 }
 
 export default PatientRepository;

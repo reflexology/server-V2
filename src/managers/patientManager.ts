@@ -1,8 +1,8 @@
 import { patientRepository } from '../repositories';
 import { IPatient } from '../models/patientModel';
 
-export function getPatients() {
-  return patientRepository.getAll();
+export function getPatients(userId: string) {
+  return patientRepository.getAllByUser(userId);
 }
 
 export function getPatientById(id: string) {
