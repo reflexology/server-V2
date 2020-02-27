@@ -34,7 +34,7 @@ export const treatmentSchema = new Schema({
   reminders: { type: String, trim: true },
   reminderDate: { type: Date },
   isReminderCompleted: { type: Boolean, default: false },
-  patientId: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.patientTableName, required: true }, // TODO add error message
+  patientId: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.patientTableName, index: true, required: true }, // TODO add error message
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.userTableName, required: true }, // TODO add error message
   diagnosis: [String]
 });
