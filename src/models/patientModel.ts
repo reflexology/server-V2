@@ -29,7 +29,11 @@ export const patientSchema = new Schema({
   phone: { type: String, trim: true },
   email: { type: String, trim: true },
   createdAt: { type: Date, default: Date.now },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, required: [true, Errors.CreatedByRequired] },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Consts.db.userTableName,
+    required: [true, Errors.CreatedByRequired]
+  },
   lastTreatment: { type: Date },
   childrenCount: { type: Number },
   gender: { type: String, enum: ['Male', 'Female'] },

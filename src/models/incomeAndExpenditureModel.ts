@@ -17,7 +17,11 @@ export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditure>({
   note: { type: String, trim: true },
   amount: { type: Number, required: true },
   createdAt: { type: Date, default: Date.now },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, required: [true, Errors.CreatedByRequired] }
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Consts.db.userTableName,
+    required: [true, Errors.CreatedByRequired]
+  }
 });
 
 const IncomeAndExpenditure = model<IIncomeAndExpenditureDocument>(
