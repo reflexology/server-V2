@@ -8,6 +8,8 @@ export interface IIncomeAndExpenditure {
   amount: number;
   createdAt?: Date;
   createdBy: string;
+  isFromTreatment?: boolean;
+  treatmentId?: string;
 }
 
 export interface IIncomeAndExpenditureDocument extends Document, IIncomeAndExpenditure {}
@@ -16,11 +18,16 @@ export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditure>({
   description: { type: String, trim: true, required: [true, Errors.IncomeOrExpenseDescriptionRequired] },
   note: { type: String, trim: true },
   amount: { type: Number, required: true },
+  isFromTreatment: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: Consts.db.userTableName,
     required: [true, Errors.CreatedByRequired]
+  },
+  treatmentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Consts.db.TreatmentTableName
   }
 });
 
