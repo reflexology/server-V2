@@ -1,6 +1,8 @@
 import mongoose, { Document, model, Schema } from 'mongoose';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
+import IncomeAndExpenditure from './incomeAndExpenditureModel';
+import logger from '../utils/logger';
 
 export interface ITreatment {
   treatmentDate?: Date;
@@ -37,6 +39,22 @@ export const treatmentSchema = new Schema({
   patientId: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.patientTableName, index: true, required: true }, // TODO add error message
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.userTableName, required: true }, // TODO add error message
   diagnosis: [String]
+});
+
+treatmentSchema.post<ITreatmentDocument>('save', async function() {
+  const income = new IncomeAndExpenditure({
+    isFromTreatment: true,
+    treatmentId: this._id,
+    createdBy: this.createdBy,
+    amount: this.paidPrice,
+    description: 'treatment' // TODO
+  });
+
+  income
+    .save()
+    .catch(() =>
+      logger.error('failed to save income after saving treatment, treatment {1}'.format(income.treatmentId))
+    );
 });
 
 const Treatment = model<ITreatmentDocument>(
