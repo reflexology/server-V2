@@ -18,6 +18,17 @@ router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async fun
 });
 
 /**
+ * Get /api/incomeAndExpenditure/income?startDate=2010-03-02T19:00:00.000Z&endDate=2020-03-02T19:00:00.000Z
+ * Private
+ * get income by id
+ */
+router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/income', async function(req, res) {
+  const amount = await incomeAndExpenditureManager.getIncome(req.query.startDate, req.query.endDate);
+
+  res.status(200).json({ amount });
+});
+
+/**
  * Get /api/incomeAndExpenditure/:id
  * Private
  * get incomeAndExpenditure by id
