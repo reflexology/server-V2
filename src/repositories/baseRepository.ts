@@ -16,7 +16,7 @@ abstract class BaseRepository<T extends Document, Data> {
   }
 
   update(id: string, data: Data) {
-    return this.model.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    return this.model.findByIdAndUpdate(id, data, { new: true });
   }
 
   delete(id: string) {
