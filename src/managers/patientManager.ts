@@ -1,5 +1,6 @@
 import { patientRepository } from '../repositories';
 import { IPatient } from '../models/patientModel';
+import moment from 'moment';
 
 export function getPatients(userId: string) {
   return patientRepository.getAllByUser(userId);
@@ -10,6 +11,8 @@ export function getPatientById(id: string) {
 }
 
 export function createPatient(patient: IPatient) {
+  if (patient.birthday) patient.birthday = moment.utc(patient.birthday, 'DD/MM/YYYY') as any; // TODO: validate date
+
   return patientRepository.create(patient);
 }
 
