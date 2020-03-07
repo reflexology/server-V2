@@ -2,6 +2,7 @@ import mongoose, { Document, model, Schema } from 'mongoose';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
 import { convertDateToAge } from '../utils/common';
+import { treatmentSchema, ITreatmentSubDocument } from './treatmentModel';
 
 export interface IPatient {
   firstName: string;
@@ -13,11 +14,12 @@ export interface IPatient {
   email?: string;
   createdAt?: Date;
   createdBy: string;
-  lastTreatment?: Date;
+  lastTreatment?: Date; // todo maybe remove
   childrenCount: number;
   gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
   calculatedAge?: Readonly<string>;
+  treatments: mongoose.Types.DocumentArray<ITreatmentSubDocument>;
 }
 
 export interface IPatientDocument extends Document, IPatient {}
@@ -40,7 +42,8 @@ export const patientSchema = new Schema<IPatientDocument>(
     lastTreatment: { type: Date },
     childrenCount: { type: Number },
     gender: { type: String, enum: ['Male', 'Female'] },
-    maritalStatus: { type: String, enum: ['Married', 'Single', 'Divorced', 'Widowed'] }
+    maritalStatus: { type: String, enum: ['Married', 'Single', 'Divorced', 'Widowed'] },
+    treatments: [treatmentSchema]
   },
   { toJSON: { virtuals: true } }
 );

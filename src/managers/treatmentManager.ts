@@ -1,25 +1,28 @@
-import { treatmentRepository } from '../repositories';
+import { patientRepository } from '../repositories';
 import { ITreatment } from '../models/treatmentModel';
 
-export function getTreatments() {
-  return treatmentRepository.getAll();
-}
-export function getTreatmentsByPatientId(patientId: string) {
-  return treatmentRepository.getTreatmentsByPatientId(patientId);
+export function getTreatments(): any {
+  return patientRepository.getAll();
 }
 
-export function getTreatmentById(id: string) {
-  return treatmentRepository.getOneById(id);
+export async function getTreatmentsByPatientId(patientId: string) {
+  const patient = await patientRepository.getOneById(patientId);
+  return patient.treatments;
 }
 
-export function createTreatment(treatment: ITreatment) {
-  return treatmentRepository.create(treatment);
+export async function getTreatmentById(id: string): Promise<ITreatment> {
+  const result = await patientRepository.getTreatmentById(id);
+  return result?.treatments?.[0];
 }
 
-export function updateTreatment(id: string, treatment: ITreatment) {
-  return treatmentRepository.update(id, treatment);
+export function createTreatment(patientId: string, treatment: ITreatment) {
+  return patientRepository.addTreatment(patientId, treatment);
 }
 
-export function deleteTreatment(id: string) {
-  return treatmentRepository.delete(id);
+export function updateTreatment(id: string, treatment: ITreatment): any {
+  return patientRepository.updateTreatment(id, treatment);
+}
+
+export function deleteTreatment(id: string): any {
+  return patientRepository.deleteTreatment(id);
 }

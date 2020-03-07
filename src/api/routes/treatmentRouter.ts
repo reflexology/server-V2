@@ -4,6 +4,7 @@ import { treatmentManager } from '../../managers';
 import { Errors } from '../../utils/errors';
 import hasFields from '../middlewares/hasFieldMiddleware';
 import hasBody from '../middlewares/hasBodyMiddleware';
+import { IPatient } from '../../models/patientModel';
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get<never, ITreatment[], ITreatment>('/', async function(req, res) {
  * Private
  * get all treatments by patient id
  */
-router.get<{ patientId: string }, ITreatment[], ITreatment>('/byPatientId:patientId', async function(req, res) {
+router.get<{ patientId: string }, ITreatment[], ITreatment>('/byPatientId/:patientId', async function(req, res) {
   const treatments = await treatmentManager.getTreatmentsByPatientId(req.params.patientId);
   res.status(200).json(treatments);
 });
@@ -45,11 +46,14 @@ router.get<IdParam, ITreatment | ResErr, ITreatment>('/:id', async function(req,
  * Private
  * Add treatment
  */
-router.post<never, ITreatment, ITreatment>(
-  '/',
+router.post<{ patientId: string }, IPatient, ITreatment>(
+  '/patient/:patientId',
   hasFields<ITreatment>(['treatmentNumber']),
   async (req, res) => {
-    const treatment = await treatmentManager.createTreatment({ ...req.body, createdBy: req.user._id });
+    const treatment = await treatmentManager.createTreatment(req.params.patientId, {
+      ...req.body,
+      createdBy: req.user._id
+    });
     res.status(201).json(treatment);
   }
 );

@@ -1,9 +1,8 @@
-import mongoose, { Document, model, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
 import IncomeAndExpenditure from './incomeAndExpenditureModel';
 import logger from '../utils/logger';
-import { patientRepository } from '../repositories';
 
 export interface ITreatment {
   treatmentDate?: Date;
@@ -18,11 +17,10 @@ export interface ITreatment {
   reminders?: string;
   reminderDate?: Date;
   isReminderCompleted?: boolean;
-  patientId?: string;
   createdBy?: string;
 }
 
-export interface ITreatmentDocument extends Document, ITreatment {}
+export interface ITreatmentSubDocument extends mongoose.Types.Subdocument, ITreatment {}
 
 export const treatmentSchema = new Schema({
   treatmentDate: { type: Date, default: Date.now },
@@ -37,12 +35,11 @@ export const treatmentSchema = new Schema({
   reminders: { type: String, trim: true },
   reminderDate: { type: Date },
   isReminderCompleted: { type: Boolean, default: false },
-  patientId: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.patientTableName, index: true, required: true }, // TODO add error message
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.userTableName, required: true }, // TODO add error message
   diagnoses: [String]
 });
 
-treatmentSchema.post<ITreatmentDocument>('save', function() {
+treatmentSchema.post('save', function() {
   const income = new IncomeAndExpenditure({
     isFromTreatment: true,
     treatmentId: this._id,
@@ -58,26 +55,18 @@ treatmentSchema.post<ITreatmentDocument>('save', function() {
     );
 });
 
-treatmentSchema.post<ITreatmentDocument>('save', function() {
-  patientRepository
-    .updateLastTreatment(this.patientId, this.treatmentDate)
-    .catch(err =>
-      logger.error('failed to save last treatment after saving treatment, treatment id: {1}'.format(this._id), err)
-    );
-});
+// treatmentSchema.post<ITreatmentDocument>('save', function() {
+//   patientRepository
+//     .updateLastTreatment(this.patientId, this.treatmentDate)
+//     .catch(err =>
+//       logger.error('failed to save last treatment after saving treatment, treatment id: {1}'.format(this._id), err)
+//     );
+// });
 
-treatmentSchema.post<ITreatmentDocument>('findOneAndUpdate', function(newTreatment: ITreatmentDocument) {
-  patientRepository
-    .updateLastTreatment(newTreatment.patientId, newTreatment.treatmentDate)
-    .catch(err =>
-      logger.error('failed to save last treatment after saving treatment, treatment id: {1}'.format(this._id), err)
-    );
-});
-
-const Treatment = model<ITreatmentDocument>(
-  Consts.db.TreatmentTableName,
-  treatmentSchema,
-  Consts.db.TreatmentTableName
-);
-
-export default Treatment;
+// treatmentSchema.post<ITreatmentDocument>('findOneAndUpdate', function(newTreatment: ITreatmentDocument) {
+//   patientRepository
+//     .updateLastTreatment(newTreatment.patientId, newTreatment.treatmentDate)
+//     .catch(err =>
+//       logger.error('failed to save last treatment after saving treatment, treatment id: {1}'.format(this._id), err)
+//     );
+// });

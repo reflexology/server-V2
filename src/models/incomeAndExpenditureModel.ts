@@ -26,8 +26,7 @@ export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditure>({
     required: [true, Errors.CreatedByRequired]
   },
   treatmentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Consts.db.TreatmentTableName
+    type: mongoose.Schema.Types.ObjectId // TODO
   }
 });
 
