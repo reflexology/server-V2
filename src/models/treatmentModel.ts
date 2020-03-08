@@ -1,8 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
-import IncomeAndExpenditure from './incomeAndExpenditureModel';
-import logger from '../utils/logger';
 
 export interface ITreatment {
   treatmentDate?: Date;
@@ -38,35 +36,3 @@ export const treatmentSchema = new Schema({
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.userTableName, required: true }, // TODO add error message
   diagnoses: [String]
 });
-
-treatmentSchema.post('save', function() {
-  const income = new IncomeAndExpenditure({
-    isFromTreatment: true,
-    treatmentId: this._id,
-    createdBy: this.createdBy,
-    amount: this.paidPrice,
-    description: 'treatment' // TODO
-  });
-
-  income
-    .save()
-    .catch(err =>
-      logger.error('failed to save income after saving treatment, treatment id: {1}'.format(income.treatmentId), err)
-    );
-});
-
-// treatmentSchema.post<ITreatmentDocument>('save', function() {
-//   patientRepository
-//     .updateLastTreatment(this.patientId, this.treatmentDate)
-//     .catch(err =>
-//       logger.error('failed to save last treatment after saving treatment, treatment id: {1}'.format(this._id), err)
-//     );
-// });
-
-// treatmentSchema.post<ITreatmentDocument>('findOneAndUpdate', function(newTreatment: ITreatmentDocument) {
-//   patientRepository
-//     .updateLastTreatment(newTreatment.patientId, newTreatment.treatmentDate)
-//     .catch(err =>
-//       logger.error('failed to save last treatment after saving treatment, treatment id: {1}'.format(this._id), err)
-//     );
-// });
