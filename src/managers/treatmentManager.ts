@@ -1,4 +1,4 @@
-import { patientRepository } from '../repositories';
+import { patientRepository, incomeAndExpenditureRepository } from '../repositories';
 import { ITreatment } from '../models/treatmentModel';
 
 export function getTreatments(): any {
@@ -15,11 +15,14 @@ export async function getTreatmentById(id: string): Promise<ITreatment> {
   return result?.treatments?.[0];
 }
 
-export function createTreatment(patientId: string, treatment: ITreatment) {
-  return patientRepository.addTreatment(patientId, treatment);
+export async function createTreatment(patientId: string, treatment: ITreatment) {
+  const patient = await patientRepository.addTreatment(patientId, treatment);
+  incomeAndExpenditureRepository.createIncomeFromTreatment(patient.treatments[patient.treatments.length - 1]); // todo check if last treatment in array is actually the new treatment
+  return patient;
 }
 
 export function updateTreatment(id: string, treatment: ITreatment): any {
+  // todo update income if paid price changed.
   return patientRepository.updateTreatment(id, treatment);
 }
 

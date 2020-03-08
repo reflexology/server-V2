@@ -3,6 +3,8 @@ import IncomeAndExpenditure, {
   IIncomeAndExpenditure
 } from '../models/incomeAndExpenditureModel';
 import BaseRepository from './baseRepository';
+import { ITreatmentSubDocument } from '../models/treatmentModel';
+import logger from '../utils/logger';
 
 class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditureDocument, IIncomeAndExpenditure> {
   constructor() {
@@ -22,6 +24,23 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
     aggregations.push({ $group: { _id: null, amount: { $sum: '$amount' } } }, { $project: { _id: 0, amount: 1 } });
 
     return IncomeAndExpenditure.aggregate<{ amount: number }>(aggregations);
+  }
+
+  createIncomeFromTreatment(treatment: ITreatmentSubDocument) {
+    logger.info('creating income from treatment, treatment id: {1}'.format(treatment._id));
+    const income = new IncomeAndExpenditure({
+      isFromTreatment: true,
+      treatmentId: treatment._id,
+      createdBy: treatment.createdBy,
+      amount: treatment.paidPrice,
+      description: 'treatment' // TODO
+    });
+
+    income
+      .save()
+      .catch(err =>
+        logger.error('failed to save income after saving treatment, treatment id: {1}'.format(income.treatmentId), err)
+      );
   }
 }
 
