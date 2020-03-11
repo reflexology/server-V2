@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Patient, { IPatient, IPatientDocument } from '../models/patientModel';
 import BaseRepository from './baseRepository';
 import { ITreatment } from '../models/treatmentModel';
@@ -7,8 +8,22 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     super(Patient);
   }
 
-  getAllByUser(userId: string) {
-    return Patient.find({ createdBy: userId });
+  getAllByUser(userId: string, inDebt: boolean, inCredit: boolean) {
+    const aggregate: {}[] = [];
+    const inDebtOrInCreditOperator = inCredit ? '$gt' : '$lt';
+
+    aggregate.push({ $match: { createdBy: mongoose.Types.ObjectId(userId) } });
+
+    if (inDebt || inCredit)
+      aggregate.push({
+        $match: {
+          $expr: {
+            [inDebtOrInCreditOperator]: [{ $sum: '$treatments.paidPrice' }, { $sum: '$treatments.treatmentPrice' }]
+          }
+        }
+      });
+
+    return Patient.aggregate(aggregate);
   }
 
   // treatments operations

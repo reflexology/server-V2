@@ -2,8 +2,8 @@ import { patientRepository } from '../repositories';
 import { IPatient } from '../models/patientModel';
 import moment from 'moment';
 
-export function getPatients(userId: string) {
-  return patientRepository.getAllByUser(userId);
+export function getPatients(userId: string, inDebt: boolean, inCredit: boolean) {
+  return patientRepository.getAllByUser(userId, inDebt, inCredit);
 }
 
 export function getPatientById(id: string) {
