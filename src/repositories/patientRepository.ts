@@ -23,6 +23,32 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
         }
       });
 
+    aggregate.push({
+      $project: {
+        _id: 1,
+        firstName: 1,
+        lastName: 1,
+        momName: 1,
+        birthday: 1,
+        age: 1,
+        phone: 1,
+        email: 1,
+        childrenCount: 1,
+        gender: 1,
+        maritalStatus: 1,
+        createdBy: 1,
+        createdAt: 1,
+        lastTreatment: { $max: '$treatments.treatmentDate' },
+        diagnoses: {
+          $reduce: {
+            input: '$treatments',
+            initialValue: [],
+            in: { $setUnion: ['$$value', '$$this.diagnoses'] }
+          }
+        }
+      }
+    });
+
     return Patient.aggregate(aggregate);
   }
 
@@ -32,7 +58,6 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     const patient = await this.getOneById(patientId);
     patient.treatments.push(treatment);
 
-    this.updateLastTreatment(patient);
     return patient.save();
   }
 
@@ -44,7 +69,6 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     const patient = await Patient.findOne({ 'treatments._id': treatmentId });
     const oldTreatment = patient.treatments.id(treatmentId);
     oldTreatment.set({ ...oldTreatment.toObject(), ...treatment });
-    this.updateLastTreatment(patient);
 
     return patient.save();
   }
@@ -53,17 +77,6 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     const patient = await Patient.findOne({ 'treatments._id': treatmentId });
     patient.treatments.id(treatmentId).remove();
     return patient.save();
-  }
-
-  private updateLastTreatment(patient: IPatientDocument) {
-    if (!patient.lastTreatment) patient.lastTreatment = patient.treatments[0].treatmentDate;
-    else
-      patient.lastTreatment = new Date(
-        Math.max.apply(
-          null,
-          patient.treatments.map(treatment => new Date(treatment.treatmentDate))
-        )
-      );
   }
 }
 

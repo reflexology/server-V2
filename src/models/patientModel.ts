@@ -14,7 +14,7 @@ export interface IPatient {
   email?: string;
   createdAt?: Date;
   createdBy: string;
-  lastTreatment?: Date; // todo maybe remove
+  lastTreatment?: Date;
   childrenCount: number;
   gender: 'Male' | 'Female';
   maritalStatus: 'Married' | 'Single' | 'Divorced' | 'Widowed';
@@ -39,7 +39,6 @@ export const patientSchema = new Schema<IPatientDocument>(
       ref: Consts.db.userTableName,
       required: [true, Errors.CreatedByRequired]
     },
-    lastTreatment: { type: Date },
     childrenCount: { type: Number },
     gender: { type: String, enum: ['Male', 'Female'] },
     maritalStatus: { type: String, enum: ['Married', 'Single', 'Divorced', 'Widowed'] },
