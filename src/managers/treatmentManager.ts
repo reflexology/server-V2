@@ -7,7 +7,14 @@ export function getTreatments(): any {
 
 export async function getTreatmentsByPatientId(patientId: string) {
   const patient = await patientRepository.getTreatmentsByPatientId(patientId);
-  return patient.treatments;
+  return patient.treatments.sort(
+    (treatmentA, treatmentB) => treatmentA.treatmentDate.getTime() - treatmentB.treatmentDate.getTime()
+  );
+}
+
+export async function getLastTreatmentsByPatientId(patientId: string) {
+  const treatments = await getTreatmentsByPatientId(patientId);
+  return treatments[treatments.length - 1];
 }
 
 export async function getTreatmentById(id: string): Promise<ITreatment> {
