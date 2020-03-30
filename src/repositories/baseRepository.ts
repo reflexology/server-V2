@@ -7,8 +7,8 @@ abstract class BaseRepository<T extends Document, Data> {
     return this.model.find();
   }
 
-  getOneById(id: string) {
-    return this.model.findById(id);
+  getOneById(id: string, projection?: { [key: string]: any }) {
+    return this.model.findById(id, projection);
   }
 
   create(data: Data) {

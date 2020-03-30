@@ -6,7 +6,7 @@ export function getTreatments(): any {
 }
 
 export async function getTreatmentsByPatientId(patientId: string) {
-  const patient = await patientRepository.getOneById(patientId);
+  const patient = await patientRepository.getTreatmentsByPatientId(patientId);
   return patient.treatments;
 }
 

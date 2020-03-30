@@ -54,6 +54,10 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
 
   // treatments operations
 
+  getTreatmentsByPatientId(patientId: string) {
+    return this.getOneById(patientId, { treatments: 1, _id: 0 });
+  }
+
   async addTreatment(patientId: string, treatment: ITreatment) {
     const patient = await this.getOneById(patientId);
     patient.treatments.push(treatment);
