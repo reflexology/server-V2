@@ -12,7 +12,7 @@ const router = express.Router();
  * Private
  * get all patients
  */
-router.get<never, IPatient[], IPatient>('/', async function(req, res) {
+router.get<never, IPatient[], IPatient>('/', async function (req, res) {
   const patients = await patientManager.getPatients(req.user._id, req.query.inDebt, req.query.inCredit);
   res.status(200).json(patients);
 });
@@ -22,7 +22,7 @@ router.get<never, IPatient[], IPatient>('/', async function(req, res) {
  * Private
  * get patient by id
  */
-router.get<IdParam, IPatient | ResErr, IPatient>('/:id', async function(req, res) {
+router.get<IdParam, IPatient | ResErr, IPatient>('/:id', async function (req, res) {
   const patient = await patientManager.getPatientById(req.params.id);
 
   if (!patient) return res.status(400).json({ msg: Errors.PatientNotExist });
@@ -49,7 +49,7 @@ router.post<never, IPatient, IPatient>(
  * Private
  * Edit patient
  */
-router.patch<IdParam, IPatient, IPatient>('/:id', hasBody, async function(req, res) {
+router.patch<IdParam, IPatient, IPatient>('/:id', hasBody, async function (req, res) {
   const patient = await patientManager.updatePatient(req.params.id, req.body);
   res.status(200).json(patient);
 });
@@ -59,7 +59,7 @@ router.patch<IdParam, IPatient, IPatient>('/:id', hasBody, async function(req, r
  * Private
  * Delete patient
  */
-router.delete<IdParam, IPatient | ResErr, IPatient>('/:id', async function(req, res) {
+router.delete<IdParam, IPatient | ResErr, IPatient>('/:id', async function (req, res) {
   const patient = await patientManager.deletePatient(req.params.id);
 
   if (!patient) return res.status(400).json({ msg: Errors.PatientNotExist });

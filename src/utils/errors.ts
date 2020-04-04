@@ -28,7 +28,7 @@ export enum Errors {
   TreatmentNumberRequired = 'err_treatment_number_required'
 }
 
-String.prototype.format = function(...values) {
+String.prototype.format = function (...values) {
   let str = this.toString();
   console.log(values);
 

@@ -4,7 +4,7 @@ import { getTokenFromHeader } from '../../utils/common';
 import { Errors } from '../../utils/errors';
 
 // Authentication middleware
-export default function(req: Request, res: Response, next: NextFunction) {
+export default function (req: Request, res: Response, next: NextFunction) {
   const token = getTokenFromHeader(req);
 
   // Check for token

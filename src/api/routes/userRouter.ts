@@ -13,7 +13,7 @@ const router = express.Router();
  * Public
  * Login with username and password
  */
-router.post<never, Tokens | ResErr, IUser>('/login', async function(req, res) {
+router.post<never, Tokens | ResErr, IUser>('/login', async function (req, res) {
   const { username, password } = req.body;
 
   // Simple validation

@@ -47,7 +47,7 @@ export const patientSchema = new Schema<IPatientDocument>(
   { toJSON: { virtuals: true } }
 );
 
-patientSchema.virtual('calculatedAge').get(function() {
+patientSchema.virtual('calculatedAge').get(function () {
   return this.birthday ? convertDateToAge(this.birthday) : this.age;
 });
 

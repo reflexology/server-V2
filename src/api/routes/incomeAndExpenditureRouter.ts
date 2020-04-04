@@ -12,7 +12,7 @@ const router = express.Router();
  * Private
  * get all incomesAndExpenditures
  */
-router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async function(req, res) {
+router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async function (req, res) {
   const incomesAndExpenditures = await incomeAndExpenditureManager.getIncomesAndExpenditures();
   res.status(200).json(incomesAndExpenditures);
 });
@@ -22,7 +22,7 @@ router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async fun
  * Private
  * get income by id
  */
-router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/income', async function(req, res) {
+router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/income', async function (req, res) {
   const amount = await incomeAndExpenditureManager.getIncome(req.query.startDate, req.query.endDate);
 
   res.status(200).json({ amount });
@@ -33,7 +33,7 @@ router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/income', async 
  * Private
  * get incomeAndExpenditure by id
  */
-router.get<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id', async function(req, res) {
+router.get<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id', async function (req, res) {
   const incomeAndExpenditure = await incomeAndExpenditureManager.getIncomeAndExpenditureById(req.params.id);
 
   if (!incomeAndExpenditure) return res.status(400).json({ msg: Errors.IncomeAndExpenditureNotExist });
@@ -63,7 +63,7 @@ router.post<never, IIncomeAndExpenditure, IIncomeAndExpenditure>(
  * Private
  * Edit incomeAndExpenditure
  */
-router.patch<IdParam, IIncomeAndExpenditure, IIncomeAndExpenditure>('/:id', hasBody, async function(req, res) {
+router.patch<IdParam, IIncomeAndExpenditure, IIncomeAndExpenditure>('/:id', hasBody, async function (req, res) {
   const incomeAndExpenditure = await incomeAndExpenditureManager.updateIncomeAndExpenditure(req.params.id, req.body);
   res.status(200).json(incomeAndExpenditure);
 });
@@ -73,7 +73,7 @@ router.patch<IdParam, IIncomeAndExpenditure, IIncomeAndExpenditure>('/:id', hasB
  * Private
  * Delete incomeAndExpenditure
  */
-router.delete<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id', async function(req, res) {
+router.delete<IdParam, IIncomeAndExpenditure | ResErr, IIncomeAndExpenditure>('/:id', async function (req, res) {
   const incomeAndExpenditure = await incomeAndExpenditureManager.deleteIncomeAndExpenditure(req.params.id);
 
   if (!incomeAndExpenditure) return res.status(400).json({ msg: Errors.IncomeAndExpenditureNotExist });
