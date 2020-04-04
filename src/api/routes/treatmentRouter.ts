@@ -23,8 +23,11 @@ router.get<never, ITreatment[], ITreatment>('/', async function(req, res) {
  * Private
  * get all treatments by patient id
  */
-router.get<{ patientId: string }, ITreatment[], ITreatment>('/byPatientId/:patientId', async function(req, res) {
-  const treatments = await treatmentManager.getTreatmentsByPatientId(req.params.patientId);
+router.get<{ patientId: string }, ITreatment, ITreatment>('/lastTreatment/byPatientId/:patientId', async function(
+  req,
+  res
+) {
+  const treatments = await treatmentManager.getLastTreatmentsByPatientId(req.params.patientId);
   res.status(200).json(treatments);
 });
 
@@ -33,11 +36,8 @@ router.get<{ patientId: string }, ITreatment[], ITreatment>('/byPatientId/:patie
  * Private
  * get all treatments by patient id
  */
-router.get<{ patientId: string }, ITreatment, ITreatment>('lastTreatment/byPatientId/:patientId', async function(
-  req,
-  res
-) {
-  const treatments = await treatmentManager.getLastTreatmentsByPatientId(req.params.patientId);
+router.get<{ patientId: string }, ITreatment[], ITreatment>('/byPatientId/:patientId', async function(req, res) {
+  const treatments = await treatmentManager.getTreatmentsByPatientId(req.params.patientId);
   res.status(200).json(treatments);
 });
 
