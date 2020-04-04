@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
   heroku: circleci/heroku@1.0.1
-  snyk: snyk/snyk@0.0.8
+  # snyk: snyk/snyk@0.0.8
 jobs:
   build:
     executor:
@@ -18,8 +18,7 @@ jobs:
             - run:
                 name: 'Build'
                 command: yarn run build
-            - snyk/scan:
-                protect: true
+            # - snyk/scan
 workflows:
   build_deploy:
     jobs:
