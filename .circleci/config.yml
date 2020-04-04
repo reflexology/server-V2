@@ -18,7 +18,8 @@ jobs:
             - run:
                 name: 'Build'
                 command: yarn run build
-            - snyk/scan
+            - snyk/scan:
+                protect: true
 workflows:
   build_deploy:
     jobs:
