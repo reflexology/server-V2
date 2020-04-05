@@ -5,6 +5,7 @@ import Consts from '../utils/consts';
 export interface IDiagnosis {
   name: string;
   createdBy: string;
+  color: string;
 }
 
 export interface IDiagnosisDocument extends Document, IDiagnosis {}
@@ -15,7 +16,8 @@ export const diagnosisSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: Consts.db.userTableName,
     required: [true, Errors.CreatedByRequired]
-  }
+  },
+  color: { type: String, required: true }
 });
 
 const Diagnosis = model<IDiagnosisDocument>(

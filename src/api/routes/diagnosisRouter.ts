@@ -37,7 +37,7 @@ router.get<IdParam, IDiagnosis | ResErr, IDiagnosis>('/:id', async function (req
  */
 router.post<never, IDiagnosis, IDiagnosis>(
   '/',
-  hasFields<IDiagnosis>(['name']),
+  hasFields<IDiagnosis>(['name', 'color']),
   async (req, res) => {
     const diagnosis = await diagnosisManager.createDiagnosis({ ...req.body, createdBy: req.user._id });
     res.status(201).json(diagnosis);
