@@ -2,6 +2,12 @@ import mongoose, { Document, model, Schema } from 'mongoose';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
 
+export interface Report {
+  income: number;
+  expenditure: number;
+  netAmount: number;
+}
+
 export interface IIncomeAndExpenditure {
   description: string;
   note?: string;

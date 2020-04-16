@@ -1,6 +1,7 @@
 import IncomeAndExpenditure, {
   IIncomeAndExpenditureDocument,
-  IIncomeAndExpenditure
+  IIncomeAndExpenditure,
+  Report
 } from '../models/incomeAndExpenditureModel';
 import BaseRepository from './baseRepository';
 import { ITreatmentSubDocument } from '../models/treatmentModel';
@@ -41,7 +42,7 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
       }
     );
 
-    return IncomeAndExpenditure.aggregate<{ income: number; expenditure: number; netAmount: number }>(aggregations);
+    return IncomeAndExpenditure.aggregate<Report>(aggregations);
   }
 
   createIncomeFromTreatment(treatment: ITreatmentSubDocument) {

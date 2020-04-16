@@ -1,5 +1,5 @@
 import express from 'express';
-import { IIncomeAndExpenditure } from '../../models/incomeAndExpenditureModel';
+import { IIncomeAndExpenditure, Report } from '../../models/incomeAndExpenditureModel';
 import { incomeAndExpenditureManager } from '../../managers';
 import { Errors } from '../../utils/errors';
 import hasFields from '../middlewares/hasFieldMiddleware';
@@ -22,7 +22,7 @@ router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async fun
  * Private
  * get income by id
  */
-router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/report', async function (req, res) {
+router.get<IdParam, Report, IIncomeAndExpenditure>('/report', async function (req, res) {
   const data = await incomeAndExpenditureManager.getReport(req.query.startDate, req.query.endDate);
 
   res.status(200).json(data);
