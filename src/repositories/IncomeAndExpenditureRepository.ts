@@ -41,7 +41,7 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
       }
     );
 
-    return IncomeAndExpenditure.aggregate<{ amount: number }>(aggregations);
+    return IncomeAndExpenditure.aggregate<{ income: number; expenditure: number; netAmount: number }>(aggregations);
   }
 
   createIncomeFromTreatment(treatment: ITreatmentSubDocument) {
