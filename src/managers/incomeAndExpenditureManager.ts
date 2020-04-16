@@ -5,13 +5,13 @@ export function getIncomesAndExpenditures() {
   return incomeAndExpenditureRepository.getAll();
 }
 
-export async function getIncome(startDate?: string, endDate?: string) {
-  const result = await incomeAndExpenditureRepository.getIncome(
+export async function getReport(startDate?: string, endDate?: string) {
+  const result = await incomeAndExpenditureRepository.getReport(
     startDate ? new Date(startDate) : null,
     endDate ? new Date(endDate) : null
   );
 
-  return result.length > 0 ? result[0].amount : 0;
+  return result[0];
 }
 
 export function getIncomeAndExpenditureById(id: string) {

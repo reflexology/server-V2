@@ -11,7 +11,7 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
     super(IncomeAndExpenditure);
   }
 
-  getIncome(startDate?: Date, endDate?: Date) {
+  getReport(startDate?: Date, endDate?: Date) {
     const aggregations = [];
 
     if (startDate || endDate) {
@@ -20,8 +20,26 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
       createdAt = endDate ? { ...createdAt, $gte: new Date(endDate.toISOString()) } : createdAt;
       aggregations.push({ $match: { createdAt: createdAt } });
     }
-
-    aggregations.push({ $group: { _id: null, amount: { $sum: '$amount' } } }, { $project: { _id: 0, amount: 1 } });
+    aggregations.push(
+      {
+        $project: {
+          income: { $cond: [{ $gt: ['$amount', 0] }, '$amount', 0] },
+          expenditure: { $cond: [{ $lt: ['$amount', 0] }, '$amount', 0] },
+          amount: 1
+        }
+      },
+      {
+        $group: {
+          _id: 0,
+          income: { $sum: '$income' },
+          expenditure: { $sum: '$expenditure' },
+          netAmount: { $sum: '$amount' }
+        }
+      },
+      {
+        $project: { _id: 0 }
+      }
+    );
 
     return IncomeAndExpenditure.aggregate<{ amount: number }>(aggregations);
   }

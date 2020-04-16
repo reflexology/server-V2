@@ -22,10 +22,10 @@ router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async fun
  * Private
  * get income by id
  */
-router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/income', async function (req, res) {
-  const amount = await incomeAndExpenditureManager.getIncome(req.query.startDate, req.query.endDate);
+router.get<IdParam, { amount: number }, IIncomeAndExpenditure>('/report', async function (req, res) {
+  const data = await incomeAndExpenditureManager.getReport(req.query.startDate, req.query.endDate);
 
-  res.status(200).json({ amount });
+  res.status(200).json(data);
 });
 
 /**
