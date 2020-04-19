@@ -17,7 +17,7 @@ export async function getTreatmentsByPatientId(patientId: string) {
 export async function getLastTreatmentAndBalance(patientId: string) {
   const treatments = await getTreatmentsByPatientId(patientId);
   const balance = treatments.reduce<number>((accumulator, currentValue) => {
-    return accumulator + (currentValue.treatmentPrice - currentValue.paidPrice);
+    return accumulator + (currentValue.paidPrice || 0) - (currentValue.treatmentPrice || 0);
   }, 0);
 
   return { balance, lastTreatment: treatments[0] };
