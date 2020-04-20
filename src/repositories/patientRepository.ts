@@ -23,31 +23,34 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
         }
       });
 
-    aggregate.push({
-      $project: {
-        _id: 1,
-        firstName: 1,
-        lastName: 1,
-        momName: 1,
-        birthday: 1,
-        age: 1,
-        phone: 1,
-        email: 1,
-        childrenCount: 1,
-        gender: 1,
-        maritalStatus: 1,
-        createdBy: 1,
-        createdAt: 1,
-        lastTreatment: { $max: '$treatments.treatmentDate' },
-        diagnoses: {
-          $reduce: {
-            input: '$treatments',
-            initialValue: [],
-            in: { $setUnion: ['$$value', '$$this.diagnoses'] }
+    aggregate.push(
+      {
+        $project: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          momName: 1,
+          birthday: 1,
+          age: 1,
+          phone: 1,
+          email: 1,
+          childrenCount: 1,
+          gender: 1,
+          maritalStatus: 1,
+          createdBy: 1,
+          createdAt: 1,
+          lastTreatment: { $max: '$treatments.treatmentDate' },
+          diagnoses: {
+            $reduce: {
+              input: '$treatments',
+              initialValue: [],
+              in: { $setUnion: ['$$value', '$$this.diagnoses'] }
+            }
           }
         }
-      }
-    });
+      },
+      { $sort: { lastTreatment: -1 } }
+    );
 
     return Patient.aggregate(aggregate);
   }
