@@ -17,8 +17,8 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
 
     if (startDate || endDate) {
       let createdAt = {};
-      createdAt = startDate ? { ...createdAt, $gte: new Date(startDate.toISOString()) } : createdAt;
-      createdAt = endDate ? { ...createdAt, $gte: new Date(endDate.toISOString()) } : createdAt;
+      createdAt = startDate ? { $gte: new Date(startDate.toISOString()) } : {};
+      createdAt = endDate ? { ...createdAt, $lt: new Date(endDate.toISOString()) } : createdAt;
       aggregations.push({ $match: { createdAt: createdAt } });
     }
     aggregations.push(
