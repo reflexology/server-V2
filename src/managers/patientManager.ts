@@ -1,9 +1,10 @@
 import { patientRepository } from '../repositories';
 import { IPatient } from '../models/patientModel';
-import moment from 'moment';
+import { convertDateToAge } from '../utils/common';
 
-export function getPatients(userId: string, inDebt: boolean, inCredit: boolean) {
-  return patientRepository.getAllByUser(userId, inDebt, inCredit);
+export async function getPatients(userId: string, inDebt: boolean, inCredit: boolean) {
+  const patients = await patientRepository.getAllByUser(userId, inDebt, inCredit);
+  return patients.map(patient => ({ ...patient, calculateAge: calculateAge(patient) }));
 }
 
 export function getPatientById(id: string) {
@@ -11,8 +12,6 @@ export function getPatientById(id: string) {
 }
 
 export function createPatient(patient: IPatient) {
-  if (patient.birthday) patient.birthday = moment.utc(patient.birthday, 'DD/MM/YYYY') as any; // TODO: validate date
-
   return patientRepository.create(patient);
 }
 
@@ -22,4 +21,8 @@ export function updatePatient(id: string, patient: IPatient) {
 
 export function deletePatient(id: string) {
   return patientRepository.delete(id);
+}
+
+export function calculateAge(patient: IPatient) {
+  return patient.birthday ? convertDateToAge(patient.birthday) : patient.age;
 }

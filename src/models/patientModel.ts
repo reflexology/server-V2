@@ -1,8 +1,9 @@
 import mongoose, { Document, model, Schema } from 'mongoose';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
-import { convertDateToAge } from '../utils/common';
 import { treatmentSchema, ITreatmentSubDocument } from './treatmentModel';
+import moment from 'moment';
+import { patientManager } from '../managers';
 
 export interface IPatient {
   firstName: string;
@@ -29,7 +30,10 @@ export const patientSchema = new Schema<IPatientDocument>(
     firstName: { type: String, trim: true, required: [true, Errors.FirstNameRequired], index: true },
     lastName: { type: String, trim: true, required: [true, Errors.LastNameRequired] },
     momName: { type: String, trim: true },
-    birthday: { type: Date },
+    birthday: {
+      type: Date,
+      set: (value: string) => (value ? moment.utc(value, 'DD/MM/YYYY') : null)
+    },
     age: { type: String, trim: true },
     phone: { type: String, trim: true },
     email: { type: String, trim: true },
@@ -48,7 +52,7 @@ export const patientSchema = new Schema<IPatientDocument>(
 );
 
 patientSchema.virtual('calculatedAge').get(function () {
-  return this.birthday ? convertDateToAge(this.birthday) : this.age;
+  return patientManager.calculateAge(this);
 });
 
 const Patient = model<IPatientDocument>(Consts.db.patientTableName, patientSchema, Consts.db.patientTableName);
