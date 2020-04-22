@@ -5,6 +5,10 @@ class DiagnosisRepository extends BaseRepository<IDiagnosisDocument, IDiagnosis>
   constructor() {
     super(Diagnosis);
   }
+
+  getAllByUserId(userId: string) {
+    return this.model.find({ createdBy: userId });
+  }
 }
 
 export default DiagnosisRepository;

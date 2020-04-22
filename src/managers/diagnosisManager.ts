@@ -1,8 +1,8 @@
 import { IDiagnosis } from '../models/diagnosisModel';
 import { diagnosisRepository } from '../repositories';
 
-export function getDiagnoses() {
-  return diagnosisRepository.getAll();
+export function getDiagnoses(userId: string) {
+  return diagnosisRepository.getAllByUserId(userId);
 }
 
 export function getDiagnosisById(id: string) {

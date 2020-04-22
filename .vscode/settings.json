@@ -6,6 +6,6 @@
     "**/dist": true,
     "**/coverage": true
   },
-  "cSpell.words": ["Subdocument", "consts", "virtuals"],
+  "cSpell.words": ["Subdocument", "consts", "middlewares", "virtuals"],
   "editor.formatOnPaste": false
 }

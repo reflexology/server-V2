@@ -17,7 +17,7 @@ export const diagnosisSchema = new Schema({
     ref: Consts.db.userTableName,
     required: [true, Errors.CreatedByRequired]
   },
-  color: { type: String, required: true }
+  color: { type: String }
 });
 
 const Diagnosis = model<IDiagnosisDocument>(

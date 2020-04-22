@@ -13,7 +13,7 @@ const router = express.Router();
  * get all diagnoses
  */
 router.get<never, IDiagnosis[], IDiagnosis>('/', async function (req, res) {
-  const diagnoses = await diagnosisManager.getDiagnoses();
+  const diagnoses = await diagnosisManager.getDiagnoses(req.user._id);
   res.status(200).json(diagnoses);
 });
 
@@ -37,7 +37,7 @@ router.get<IdParam, IDiagnosis | ResErr, IDiagnosis>('/:id', async function (req
  */
 router.post<never, IDiagnosis, IDiagnosis>(
   '/',
-  hasFields<IDiagnosis>(['name', 'color']),
+  hasFields<IDiagnosis>(['name']),
   async (req, res) => {
     const diagnosis = await diagnosisManager.createDiagnosis({ ...req.body, createdBy: req.user._id });
     res.status(201).json(diagnosis);
