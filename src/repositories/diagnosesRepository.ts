@@ -9,6 +9,10 @@ class DiagnosisRepository extends BaseRepository<IDiagnosisDocument, IDiagnosis>
   getAllByUserId(userId: string) {
     return this.model.find({ createdBy: userId });
   }
+
+  createMulti(diagnoses: IDiagnosis[]) {
+    return this.model.create(diagnoses);
+  }
 }
 
 export default DiagnosisRepository;

@@ -39,8 +39,22 @@ router.post<never, IDiagnosis, IDiagnosis>(
   '/',
   hasFields<IDiagnosis>(['name']),
   async (req, res) => {
-    const diagnosis = await diagnosisManager.createDiagnosis({ ...req.body, createdBy: req.user._id });
+    const diagnosis = await diagnosisManager.createDiagnosis(req.user._id, req.body);
     res.status(201).json(diagnosis);
+  }
+);
+
+/**
+ * POST /api/diagnosis/
+ * Private
+ * Add diagnosis
+ */
+router.post<never, IDiagnosis[], IDiagnosis[]>(
+  '/multiple',
+  hasFields<IDiagnosis>(['name']),
+  async (req, res) => {
+    const diagnoses = await diagnosisManager.createDiagnoses(req.user._id, req.body);
+    res.status(201).json(diagnoses);
   }
 );
 

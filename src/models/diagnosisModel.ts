@@ -5,7 +5,7 @@ import Consts from '../utils/consts';
 export interface IDiagnosis {
   name: string;
   createdBy: string;
-  color: string;
+  color?: string;
 }
 
 export interface IDiagnosisDocument extends Document, IDiagnosis {}

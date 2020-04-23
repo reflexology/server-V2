@@ -9,8 +9,12 @@ export function getDiagnosisById(id: string) {
   return diagnosisRepository.getOneById(id);
 }
 
-export function createDiagnosis(diagnosis: IDiagnosis) {
-  return diagnosisRepository.create(diagnosis);
+export function createDiagnoses(userId: string, diagnoses: IDiagnosis[]) {
+  return diagnosisRepository.createMulti(diagnoses.map(diagnosis => ({ ...diagnosis, createdBy: userId })));
+}
+
+export function createDiagnosis(userId: string, diagnosis: IDiagnosis) {
+  return diagnosisRepository.create({ ...diagnosis, createdBy: userId });
 }
 
 export function updateDiagnosis(id: string, diagnosis: IDiagnosis) {
