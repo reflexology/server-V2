@@ -30,4 +30,5 @@ export const convertDateToAge = (date: Date) => {
   return diff.isValid() && !utcDate.isAfter(moment()) ? diff.years() + '.' + diff.months() : '';
 };
 
-export const isObjectEmpty = (obj: {}) => Object.entries(obj).length === 0 && obj.constructor === Object;
+export const isObjectEmpty = (obj: Record<string, unknown>) =>
+  Object.entries(obj).length === 0 && obj.constructor === Object;

@@ -9,7 +9,7 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
   }
 
   getAllByUser(userId: string, inDebt: boolean, inCredit: boolean) {
-    const aggregate: {}[] = [];
+    const aggregate: Record<string, unknown>[] = [];
     const inDebtOrInCreditOperator = inCredit ? '$gt' : '$lt';
 
     aggregate.push({ $match: { createdBy: mongoose.Types.ObjectId(userId) } });

@@ -1,14 +1,14 @@
 import { IUserDocument } from './../models/userModel';
 import jwt from 'jsonwebtoken';
 
-export const generateAccessToken = (payload: object, options?: jwt.SignOptions) => {
+export const generateAccessToken = (payload: Record<string, unknown>, options?: jwt.SignOptions) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET_KEY, {
     expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
     ...options
   });
 };
 
-export const generateRefreshToken = (payload: object, options?: jwt.SignOptions) => {
+export const generateRefreshToken = (payload: Record<string, unknown>, options?: jwt.SignOptions) => {
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET_KEY, {
     expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
     ...options
