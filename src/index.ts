@@ -1,7 +1,7 @@
 import express from 'express';
 import logger from './utils/logger';
-import routes from './api';
 import './config/env'; // must import .env before using the process.env
+import routes from './api';
 import connectToDb from './config/db';
 
 const app = express();

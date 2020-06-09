@@ -12,6 +12,7 @@ import patientRouter from './routes/patientRouter';
 import treatmentRouter from './routes/treatmentRouter';
 import diagnosisRouter from './routes/diagnosisRouter';
 import incomeAndExpenditureRouter from './routes/incomeAndExpenditureRouter';
+import fileRouter from './routes/fileRouter';
 import authMiddleware from './middlewares/authMiddleware';
 
 function initMiddlewares(app: express.Application) {
@@ -45,6 +46,7 @@ function initRoutes(app: express.Application) {
   app.use('/api/treatment', treatmentRouter);
   app.use('/api/diagnosis', diagnosisRouter);
   app.use('/api/incomeAndExpenditure', incomeAndExpenditureRouter);
+  app.use('/api/file', fileRouter);
   app.use(errorMiddleware);
 }
 
