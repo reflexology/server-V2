@@ -7,6 +7,6 @@ const envPath = process.env.NODE_ENV === 'test' ? '../../.env.' + process.env.NO
 
 const envFound = dotenv.config({ path: __dirname + '/' + envPath });
 
-if (envFound.error) {
+if (envFound.error && process.env.NODE_ENV !== 'production') {
   console.warn(`⚠️  Couldn't find .env file  ⚠️`);
 }
