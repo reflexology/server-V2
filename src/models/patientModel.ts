@@ -1,9 +1,10 @@
+import moment from 'moment';
 import mongoose, { Document, model, Schema } from 'mongoose';
+
+import { patientManager } from '../managers';
 import Consts from '../utils/consts';
 import { Errors } from '../utils/errors';
-import { treatmentSchema, ITreatmentSubDocument } from './treatmentModel';
-import moment from 'moment';
-import { patientManager } from '../managers';
+import { ITreatmentSubDocument, treatmentSchema } from './treatmentModel';
 
 export interface IPatient {
   firstName: string;

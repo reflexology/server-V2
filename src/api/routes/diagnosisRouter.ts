@@ -1,9 +1,10 @@
 import express from 'express';
-import { IDiagnosis } from '../../models/diagnosisModel';
+
 import { diagnosisManager } from '../../managers';
+import { IDiagnosis } from '../../models/diagnosisModel';
 import { Errors } from '../../utils/errors';
-import hasFields from '../middlewares/hasFieldMiddleware';
 import hasBody from '../middlewares/hasBodyMiddleware';
+import hasFields from '../middlewares/hasFieldMiddleware';
 
 const router = express.Router();
 

@@ -1,6 +1,7 @@
-import { Request } from 'express';
 import aws from 'aws-sdk';
+import { Request } from 'express';
 import path from 'path';
+
 import logger from '../utils/logger';
 
 export const s3 = new aws.S3({

@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from 'express-serve-static-core';
+import { NextFunction, Request, Response } from 'express-serve-static-core';
 import mongoose from 'mongoose';
-import logger from '../../utils/logger';
+
 import { Errors } from '../../utils/errors';
+import logger from '../../utils/logger';
 
 // Error middleware
 

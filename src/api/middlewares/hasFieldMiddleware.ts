@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
+
 import { Errors } from '../../utils/errors';
 
 export default function hasFields<T>(keys: (keyof T)[]) {

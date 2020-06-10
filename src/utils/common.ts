@@ -1,5 +1,5 @@
-import { Request } from 'express';
 import bcrypt from 'bcryptjs';
+import { Request } from 'express';
 import moment from 'moment';
 
 export const getTokenFromHeader = (req: Request) => {

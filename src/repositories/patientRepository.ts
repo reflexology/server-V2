@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+
 import Patient, { IPatient, IPatientDocument } from '../models/patientModel';
-import BaseRepository from './baseRepository';
 import { ITreatment } from '../models/treatmentModel';
+import BaseRepository from './baseRepository';
 
 class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
   constructor() {

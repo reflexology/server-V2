@@ -1,7 +1,7 @@
-import PatientRepository from './patientRepository';
-import UserRepository from './userRepository';
 import DiagnosisRepository from './diagnosesRepository';
 import IncomeAndExpenditureRepository from './IncomeAndExpenditureRepository';
+import PatientRepository from './patientRepository';
+import UserRepository from './userRepository';
 
 const patientRepository = new PatientRepository();
 const diagnosisRepository = new DiagnosisRepository();

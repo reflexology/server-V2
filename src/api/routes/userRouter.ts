@@ -1,10 +1,11 @@
-import express from 'express';
 import bcrypt from 'bcryptjs';
+import express from 'express';
+
 import { userManager } from '../../managers';
-import * as jwtService from '../../services/jwtService';
-import auth from '../middlewares/authMiddleware';
-import { Errors } from '../../utils/errors';
 import { IUser } from '../../models/userModel';
+import * as jwtService from '../../services/jwtService';
+import { Errors } from '../../utils/errors';
+import auth from '../middlewares/authMiddleware';
 
 const router = express.Router();
 

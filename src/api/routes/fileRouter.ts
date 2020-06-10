@@ -1,6 +1,7 @@
 import express from 'express';
-import multerS3 from 'multer-s3';
 import multer from 'multer';
+import multerS3 from 'multer-s3';
+
 import { fileManager } from '../../managers';
 
 const router = express.Router();

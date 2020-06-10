@@ -1,4 +1,5 @@
 import mongoose, { ConnectionOptions } from 'mongoose';
+
 import logger from '../utils/logger';
 
 if (process.env.NODE_ENV === 'development') mongoose.set('debug', true);

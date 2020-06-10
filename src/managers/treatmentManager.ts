@@ -1,5 +1,5 @@
-import { patientRepository, incomeAndExpenditureRepository } from '../repositories';
 import { ITreatment } from '../models/treatmentModel';
+import { incomeAndExpenditureRepository, patientRepository } from '../repositories';
 
 export function getTreatments(): any {
   return patientRepository.getAll();

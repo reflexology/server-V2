@@ -1,11 +1,11 @@
 import IncomeAndExpenditure, {
-  IIncomeAndExpenditureDocument,
   IIncomeAndExpenditure,
+  IIncomeAndExpenditureDocument,
   Report
 } from '../models/incomeAndExpenditureModel';
-import BaseRepository from './baseRepository';
 import { ITreatmentSubDocument } from '../models/treatmentModel';
 import logger from '../utils/logger';
+import BaseRepository from './baseRepository';
 
 class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditureDocument, IIncomeAndExpenditure> {
   constructor() {

@@ -1,6 +1,7 @@
 import mongoose, { Document, model, Schema } from 'mongoose';
-import { Errors } from './../utils/errors';
+
 import Consts from '../utils/consts';
+import { Errors } from './../utils/errors';
 
 export interface IDiagnosis {
   name: string;

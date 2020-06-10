@@ -1,5 +1,5 @@
-import { patientRepository } from '../repositories';
 import { IPatient } from '../models/patientModel';
+import { patientRepository } from '../repositories';
 import { convertDateToAge } from '../utils/common';
 
 export async function getPatients(userId: string, inDebt: boolean, inCredit: boolean) {

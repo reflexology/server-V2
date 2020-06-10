@@ -1,10 +1,11 @@
-import { ITreatment } from './../../models/treatmentModel';
 import express from 'express';
+
 import { treatmentManager } from '../../managers';
-import { Errors } from '../../utils/errors';
-import hasFields from '../middlewares/hasFieldMiddleware';
-import hasBody from '../middlewares/hasBodyMiddleware';
 import { IPatient } from '../../models/patientModel';
+import { Errors } from '../../utils/errors';
+import hasBody from '../middlewares/hasBodyMiddleware';
+import hasFields from '../middlewares/hasFieldMiddleware';
+import { ITreatment } from './../../models/treatmentModel';
 
 const router = express.Router();
 

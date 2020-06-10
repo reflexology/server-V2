@@ -1,5 +1,6 @@
-import { IUserDocument } from './../models/userModel';
 import jwt from 'jsonwebtoken';
+
+import { IUserDocument } from './../models/userModel';
 
 export const generateAccessToken = (payload: Record<string, unknown>, options?: jwt.SignOptions) => {
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET_KEY, {

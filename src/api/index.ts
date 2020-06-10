@@ -1,19 +1,20 @@
-import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import helmet from 'helmet';
-import compression from 'compression';
 import 'express-async-errors'; // handle all async errors and send them to error middleware.
 
+import compression from 'compression';
+import cors from 'cors';
+import express from 'express';
+import helmet from 'helmet';
+import morgan from 'morgan';
+
+import authMiddleware from './middlewares/authMiddleware';
 import errorMiddleware from './middlewares/errorMiddleware';
 import authRouter from './routes/authRouter';
-import userRouter from './routes/userRouter';
+import diagnosisRouter from './routes/diagnosisRouter';
+import fileRouter from './routes/fileRouter';
+import incomeAndExpenditureRouter from './routes/incomeAndExpenditureRouter';
 import patientRouter from './routes/patientRouter';
 import treatmentRouter from './routes/treatmentRouter';
-import diagnosisRouter from './routes/diagnosisRouter';
-import incomeAndExpenditureRouter from './routes/incomeAndExpenditureRouter';
-import fileRouter from './routes/fileRouter';
-import authMiddleware from './middlewares/authMiddleware';
+import userRouter from './routes/userRouter';
 
 function initMiddlewares(app: express.Application) {
   // Enable Cross Origin Resource Sharing to all origins by default

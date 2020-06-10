@@ -1,6 +1,6 @@
+import { userRepository } from '../repositories';
 import { IUser } from './../models/userModel';
 import { hashPassword } from './../utils/common';
-import { userRepository } from '../repositories';
 
 export function getUserByUsername(username: string) {
   return userRepository.getOneByUsername(username);
