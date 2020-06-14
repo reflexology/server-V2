@@ -13,6 +13,7 @@ import diagnosisRouter from './routes/diagnosisRouter';
 import fileRouter from './routes/fileRouter';
 import incomeAndExpenditureRouter from './routes/incomeAndExpenditureRouter';
 import patientRouter from './routes/patientRouter';
+import reminderRouter from './routes/reminderRouter';
 import treatmentRouter from './routes/treatmentRouter';
 import userRouter from './routes/userRouter';
 
@@ -48,6 +49,7 @@ function initRoutes(app: express.Application) {
   app.use('/api/diagnosis', diagnosisRouter);
   app.use('/api/incomeAndExpenditure', incomeAndExpenditureRouter);
   app.use('/api/file', fileRouter);
+  app.use('/api/reminder', reminderRouter);
   app.use(errorMiddleware);
 }
 

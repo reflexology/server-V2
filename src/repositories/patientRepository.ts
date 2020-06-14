@@ -86,6 +86,26 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     patient.treatments.id(treatmentId).remove();
     return patient.save();
   }
+
+  // reminders operations
+
+  async getAllReminders(userId: string, newReminders: boolean) {
+    const aggregate: Record<string, unknown>[] = [];
+
+    aggregate.push(
+      { $unwind: '$treatments' },
+      {
+        $match: {
+          createdBy: mongoose.Types.ObjectId(userId),
+          'treatments.reminderDate': newReminders ? { $lte: new Date() } : { $ne: null },
+          ...(newReminders && { 'treatments.isReminderCompleted': { $eq: false } })
+        }
+      },
+      { $project: { 'treatments.reminderDate': 1, 'treatments.reminder': 1, 'treatments.isReminderCompleted': 1 } }
+    );
+
+    return Patient.aggregate(aggregate);
+  }
 }
 
 export default PatientRepository;
