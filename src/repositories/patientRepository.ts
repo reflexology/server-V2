@@ -101,7 +101,18 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
           ...(newReminders && { 'treatments.isReminderCompleted': { $eq: false } })
         }
       },
-      { $project: { 'treatments.reminderDate': 1, 'treatments.reminder': 1, 'treatments.isReminderCompleted': 1 } }
+      {
+        $project: {
+          _id: 0,
+          firstName: 1,
+          lastName: 1,
+          momName: 1,
+          'treatments._id': 1,
+          'treatments.reminderDate': 1,
+          'treatments.reminder': 1,
+          'treatments.isReminderCompleted': 1
+        }
+      }
     );
 
     return Patient.aggregate(aggregate);
