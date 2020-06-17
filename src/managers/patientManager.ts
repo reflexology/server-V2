@@ -4,7 +4,7 @@ import { convertDateToAge } from '../utils/common';
 
 export async function getPatients(userId: string, inDebt: boolean, inCredit: boolean) {
   const patients = await patientRepository.getAllByUser(userId, inDebt, inCredit);
-  return patients.map(patient => ({ ...patient, calculateAge: calculateAge(patient) }));
+  return patients.map(patient => ({ ...patient, calculatedAge: calculateAge(patient) }));
 }
 
 export function getPatientById(id: string) {
