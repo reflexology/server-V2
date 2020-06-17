@@ -40,6 +40,8 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
           maritalStatus: 1,
           createdBy: 1,
           createdAt: 1,
+          profession: 1,
+          childrenAges: 1,
           lastTreatment: { $max: '$treatments.treatmentDate' },
           diagnoses: {
             $reduce: {
