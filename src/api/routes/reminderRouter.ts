@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { reminderManager } from '../../managers';
+import { UpdateReminder } from '../../managers/reminderManager';
 
 const router = express.Router();
 
@@ -12,6 +13,16 @@ const router = express.Router();
 router.get<never, any[], never>('/', async function (req, res) {
   const reminders = await reminderManager.getAllReminders(req.user._id, req.query.isNewReminders);
   res.status(200).json(reminders);
+});
+
+/**
+ * Patch /api/:treatmentId
+ * Private
+ * edit reminder
+ */
+router.patch<{ treatmentId: string }, any, UpdateReminder>('/:treatmentId', async function (req, res) {
+  await reminderManager.markReminderAsComplete(req.params.treatmentId, req.body);
+  res.status(204).end();
 });
 
 export default router;

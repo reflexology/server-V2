@@ -1,3 +1,4 @@
+import { ITreatment } from '../models/treatmentModel';
 import { patientRepository } from '../repositories';
 
 export interface Reminder {
@@ -8,6 +9,7 @@ export interface Reminder {
   reminderDate: Date;
   reminders: string;
 }
+export type UpdateReminder = Pick<ITreatment, 'isReminderCompleted' | 'reminders' | 'reminderDate'>;
 
 export async function getAllReminders(userId: string, newTreatment: boolean): Promise<Reminder[]> {
   const reminders = await patientRepository.getAllReminders(userId, newTreatment);
@@ -20,4 +22,8 @@ export async function getAllReminders(userId: string, newTreatment: boolean): Pr
     treatmentId: reminder.treatments._id,
     reminders: reminder.treatments.reminders
   }));
+}
+
+export function markReminderAsComplete(treatmentId: string, reminder: UpdateReminder) {
+  return patientRepository.updateTreatment(treatmentId, reminder);
 }
