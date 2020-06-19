@@ -111,7 +111,7 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
           momName: 1,
           'treatments._id': 1,
           'treatments.reminderDate': 1,
-          'treatments.reminder': 1,
+          'treatments.reminders': 1,
           'treatments.isReminderCompleted': 1
         }
       }
