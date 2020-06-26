@@ -12,6 +12,10 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
     super(IncomeAndExpenditure);
   }
 
+  getAllByUserId(userId: string) {
+    return this.model.find({ createdBy: userId });
+  }
+
   getReport(startDate?: Date, endDate?: Date) {
     const aggregations = [];
 

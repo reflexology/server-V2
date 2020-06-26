@@ -1,8 +1,8 @@
 import { IIncomeAndExpenditure } from '../models/incomeAndExpenditureModel';
 import { incomeAndExpenditureRepository } from '../repositories';
 
-export function getIncomesAndExpenditures() {
-  return incomeAndExpenditureRepository.getAll();
+export function getIncomesAndExpenditures(userId: string) {
+  return incomeAndExpenditureRepository.getAllByUserId(userId);
 }
 
 export async function getReport(startDate?: string, endDate?: string) {

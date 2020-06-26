@@ -14,7 +14,7 @@ const router = express.Router();
  * get all incomesAndExpenditures
  */
 router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async function (req, res) {
-  const incomesAndExpenditures = await incomeAndExpenditureManager.getIncomesAndExpenditures();
+  const incomesAndExpenditures = await incomeAndExpenditureManager.getIncomesAndExpenditures(req.user._id);
   res.status(200).json(incomesAndExpenditures);
 });
 
