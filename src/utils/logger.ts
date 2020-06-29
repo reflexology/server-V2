@@ -6,7 +6,7 @@ const options: winston.LoggerOptions = {
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
-      level: process.env.NODE_ENV === 'production' ? 'error' : 'debug'
+      level: process.env.NODE_ENV === 'production' ? 'warn' : 'debug'
     }),
 
     //
@@ -14,7 +14,7 @@ const options: winston.LoggerOptions = {
     // - Write all logs error (and below) to `error.log`.
     //
 
-    new winston.transports.File({ filename: logFolder + '/error.log', level: 'error' }),
+    new winston.transports.File({ filename: logFolder + '/error.log', level: 'warn' }),
     new winston.transports.File({ filename: logFolder + '/combined.log' })
   ],
   exceptionHandlers: [new winston.transports.File({ filename: logFolder + '/exceptions.log' })]

@@ -32,3 +32,5 @@ export const convertDateToAge = (date: Date) => {
 
 export const isObjectEmpty = (obj: Record<string, unknown>) =>
   Object.entries(obj).length === 0 && obj.constructor === Object;
+
+export const getRequestUrl = (request: Request) => request.protocol + '://' + request.get('host') + request.originalUrl;
