@@ -15,12 +15,18 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
 
     aggregate.push({ $match: { createdBy: mongoose.Types.ObjectId(userId) } });
 
+    aggregate.push({
+      $addFields: {
+        balance: {
+          $subtract: [{ $sum: '$treatments.paidPrice' }, { $sum: '$treatments.treatmentPrice' }]
+        }
+      }
+    });
+
     if (inDebt || inCredit)
       aggregate.push({
         $match: {
-          $expr: {
-            [inDebtOrInCreditOperator]: [{ $sum: '$treatments.paidPrice' }, { $sum: '$treatments.treatmentPrice' }]
-          }
+          balance: { [inDebtOrInCreditOperator]: 0 }
         }
       });
 
@@ -41,6 +47,7 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
           createdBy: 1,
           createdAt: 1,
           profession: 1,
+          balance: 1,
           childrenAges: 1,
           lastTreatment: { $max: '$treatments.treatmentDate' },
           diagnoses: {
