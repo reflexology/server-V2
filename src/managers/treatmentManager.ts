@@ -30,7 +30,7 @@ export async function getTreatmentById(id: string): Promise<ITreatment> {
 
 export async function createTreatment(patientId: string, treatment: ITreatment) {
   const patient = await patientRepository.addTreatment(patientId, treatment);
-  incomeAndExpenditureRepository.createIncomeFromTreatment(patient.treatments[patient.treatments.length - 1]); // todo check if last treatment in array is actually the new treatment
+  incomeAndExpenditureRepository.createIncomeFromTreatment(patient, patient.treatments[patient.treatments.length - 1]); // todo check if last treatment in array is actually the new treatment
   return patient;
 }
 

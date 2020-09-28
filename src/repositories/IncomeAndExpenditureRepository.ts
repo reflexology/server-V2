@@ -3,6 +3,7 @@ import IncomeAndExpenditure, {
   IIncomeAndExpenditureDocument,
   Report
 } from '../models/incomeAndExpenditureModel';
+import { IPatientDocument } from '../models/patientModel';
 import { ITreatmentSubDocument } from '../models/treatmentModel';
 import logger from '../utils/logger';
 import BaseRepository from './baseRepository';
@@ -13,7 +14,7 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
   }
 
   getAllByUserId(userId: string) {
-    return this.model.find({ createdBy: userId });
+    return this.model.find({ createdBy: userId }).sort({ createdAt: -1 });
   }
 
   getReport(startDate?: Date, endDate?: Date) {
@@ -49,13 +50,14 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
     return IncomeAndExpenditure.aggregate<Report>(aggregations);
   }
 
-  createIncomeFromTreatment(treatment: ITreatmentSubDocument) {
+  createIncomeFromTreatment(patient: IPatientDocument, treatment: ITreatmentSubDocument) {
     logger.info('creating income from treatment, treatment id: {1}'.format(treatment._id));
     const income = new IncomeAndExpenditure({
       isFromTreatment: true,
       treatmentId: treatment._id,
       createdBy: treatment.createdBy,
       amount: treatment.paidPrice,
+      note: patient.firstName + ' ' + patient.lastName,
       description: 'treatment' // TODO
     });
 
