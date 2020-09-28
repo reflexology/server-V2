@@ -10,7 +10,7 @@ const router = express.Router();
  * Private
  * get all reminders / new and uncompleted reminders
  */
-router.get<never, any[], never>('/', async function (req, res) {
+router.get<never, any[], never, { isNewReminders: boolean }>('/', async function (req, res) {
   const reminders = await reminderManager.getAllReminders(req.user._id, req.query.isNewReminders);
   res.status(200).json(reminders);
 });

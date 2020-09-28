@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import { Request } from 'express';
 import moment from 'moment';
 
-export const getTokenFromHeader = (req: Request) => {
+export const getTokenFromHeader = (req: Request<any, any, any, any>) => {
   if (
     (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token') ||
     (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer')

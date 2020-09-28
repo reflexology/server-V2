@@ -12,7 +12,7 @@ abstract class BaseRepository<T extends Document, Data> {
   }
 
   create(data: Data) {
-    return this.model.create(data);
+    return this.model.create<Data>(data as any);
   }
 
   update(id: string, data: Data) {

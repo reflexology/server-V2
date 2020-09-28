@@ -13,7 +13,7 @@ const router = express.Router();
  * Private
  * get all patients
  */
-router.get<never, IPatient[], IPatient>('/', async function (req, res) {
+router.get<never, IPatient[], IPatient, { inDebt: boolean; inCredit: boolean }>('/', async function (req, res) {
   const patients = await patientManager.getPatients(req.user._id, req.query.inDebt, req.query.inCredit);
   res.status(200).json(patients);
 });
