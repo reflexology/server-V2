@@ -27,3 +27,7 @@ export async function getAllReminders(userId: string, newTreatment: boolean): Pr
 export function markReminderAsComplete(treatmentId: string, reminder: UpdateReminder) {
   return patientRepository.updateTreatment(treatmentId, reminder);
 }
+
+export function markRemindersAsComplete(treatmentIds: string[]) {
+  return patientRepository.markRemindersAsCompleted(treatmentIds);
+}

@@ -8,6 +8,7 @@ declare namespace Express {
 interface DecodedUser {
   user: User;
 }
+
 interface User {
   _id: string;
   username: string;

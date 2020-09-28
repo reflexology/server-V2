@@ -20,6 +20,16 @@ router.get<never, any[], never>('/', async function (req, res) {
  * Private
  * edit reminder
  */
+router.patch<never, any, string[]>('/multiple', async function (req, res) {
+  await reminderManager.markRemindersAsComplete(req.body);
+  res.status(204).end();
+});
+
+/**
+ * Patch /api/:treatmentId
+ * Private
+ * edit reminder
+ */
 router.patch<{ treatmentId: string }, any, UpdateReminder>('/:treatmentId', async function (req, res) {
   await reminderManager.markReminderAsComplete(req.params.treatmentId, req.body);
   res.status(204).end();

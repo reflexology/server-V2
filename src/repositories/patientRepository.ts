@@ -90,6 +90,13 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     return patient.save();
   }
 
+  markRemindersAsCompleted(treatmentIds: string[]) {
+    return this.model.updateMany(
+      { 'treatments._id': treatmentIds },
+      { $set: { 'treatments.$[].isReminderCompleted': true } }
+    );
+  }
+
   async deleteTreatment(treatmentId: string) {
     const patient = await Patient.findOne({ 'treatments._id': treatmentId });
     patient.treatments.id(treatmentId).remove();
