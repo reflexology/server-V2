@@ -47,7 +47,6 @@ export const patientSchema = new Schema<IPatientDocument>(
     childrenCount: { type: Number },
     gender: { type: String, enum: ['Male', 'Female'] },
     maritalStatus: { type: String, enum: ['Married', 'Single', 'Divorced', 'Widowed'] },
-    profession: { type: String, trim: true },
     childrenAges: { type: [Number] },
     treatments: [treatmentSchema]
   },

@@ -1,7 +1,6 @@
 import express from 'express';
 
 import { treatmentManager } from '../../managers';
-import { IPatient } from '../../models/patientModel';
 import { Errors } from '../../utils/errors';
 import hasBody from '../middlewares/hasBodyMiddleware';
 import hasFields from '../middlewares/hasFieldMiddleware';
@@ -60,7 +59,7 @@ router.get<IdParam, ITreatment | ResErr, ITreatment>('/:id', async function (req
  * Private
  * Add treatment
  */
-router.post<{ patientId: string }, IPatient, ITreatment>(
+router.post<{ patientId: string }, ITreatment, ITreatment>(
   '/patient/:patientId',
   hasFields<ITreatment>(['treatmentNumber']),
   async (req, res) => {

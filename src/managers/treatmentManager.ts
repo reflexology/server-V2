@@ -30,13 +30,18 @@ export async function getTreatmentById(id: string): Promise<ITreatment> {
 
 export async function createTreatment(patientId: string, treatment: ITreatment) {
   const patient = await patientRepository.addTreatment(patientId, treatment);
-  incomeAndExpenditureRepository.createIncomeFromTreatment(patient, patient.treatments[patient.treatments.length - 1]); // todo check if last treatment in array is actually the new treatment
-  return patient;
+
+  const newTreatment = patient.treatments[patient.treatments.length - 1];
+  // todo check if last treatment in array is actually the new treatment
+
+  if (treatment.paidPrice) incomeAndExpenditureRepository.createIncomeFromTreatment(patient, newTreatment);
+  return newTreatment;
 }
 
-export function updateTreatment(id: string, treatment: ITreatment): any {
+export async function updateTreatment(id: string, treatment: ITreatment) {
   // todo update income if paid price changed.
-  return patientRepository.updateTreatment(id, treatment);
+  const patient = await patientRepository.updateTreatment(id, treatment);
+  return patient.treatments[patient.treatments.length - 1];
 }
 
 export function deleteTreatment(id: string): any {
