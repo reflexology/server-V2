@@ -23,13 +23,13 @@ router.get<never, ITreatment[], ITreatment>('/', async function (req, res) {
  * Private
  * get all treatments by patient id
  */
-router.get<{ patientId: string }, ThenArg<ReturnType<typeof treatmentManager.getLastTreatmentAndBalance>>, ITreatment>(
-  '/lastTreatment/byPatientId/:patientId',
-  async function (req, res) {
-    const data = await treatmentManager.getLastTreatmentAndBalance(req.params.patientId);
-    res.status(200).json(data);
-  }
-);
+router.get<{ patientId: string }, ITreatment, ITreatment>('/lastTreatment/byPatientId/:patientId', async function (
+  req,
+  res
+) {
+  const data = await treatmentManager.getLastTreatment(req.params.patientId);
+  res.status(200).json(data);
+});
 
 /**
  * Get /api/treatment/byPatientId:patientId
@@ -78,6 +78,7 @@ router.post<{ patientId: string }, ITreatment, ITreatment>(
  */
 router.patch<IdParam, ITreatment, ITreatment>('/:id', hasBody, async function (req, res) {
   const treatment = await treatmentManager.updateTreatment(req.params.id, req.body);
+
   res.status(200).json(treatment);
 });
 

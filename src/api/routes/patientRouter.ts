@@ -23,6 +23,20 @@ router.get<never, IPatient[], IPatient, { inDebt: boolean; inCredit: boolean }>(
  * Private
  * get patient by id
  */
+router.get<IdParam, IPatient | ResErr, IPatient>('/byTreatmentId/:id', async function (req, res) {
+  const patient = await patientManager.getPatientByTreatmentId(req.params.id);
+  console.log(patient);
+
+  if (!patient) return res.status(400).json({ msg: Errors.PatientNotExist });
+
+  res.status(200).json(patient);
+});
+
+/**
+ * Get /api/patient/:id
+ * Private
+ * get patient by id
+ */
 router.get<IdParam, IPatient | ResErr, IPatient>('/:id', async function (req, res) {
   const patient = await patientManager.getPatientById(req.params.id);
 

@@ -81,6 +81,10 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     return Patient.findOne({ 'treatments._id': treatmentId }, { 'treatments.$': 1 });
   }
 
+  async getPatientByTreatmentId(treatmentId: string) {
+    return Patient.findOne({ 'treatments._id': treatmentId }, { treatments: 0, __v: 0 });
+  }
+
   async updateTreatment(treatmentId: string, treatment: Partial<ITreatment>) {
     const patient = await Patient.findOne({ 'treatments._id': treatmentId });
     const oldTreatment = patient.treatments.id(treatmentId);

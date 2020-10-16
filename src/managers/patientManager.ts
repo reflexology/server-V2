@@ -11,6 +11,10 @@ export function getPatientById(id: string) {
   return patientRepository.getOneById(id);
 }
 
+export function getPatientByTreatmentId(treatmentId: string) {
+  return patientRepository.getPatientByTreatmentId(treatmentId);
+}
+
 export function createPatient(patient: IPatient) {
   return patientRepository.create(patient);
 }

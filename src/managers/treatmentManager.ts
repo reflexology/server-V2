@@ -14,18 +14,15 @@ export async function getTreatmentsByPatientId(patientId: string) {
   );
 }
 
-export async function getLastTreatmentAndBalance(patientId: string) {
+export async function getLastTreatment(patientId: string) {
   const treatments = await getTreatmentsByPatientId(patientId);
-  const balance = treatments.reduce<number>((accumulator, currentValue) => {
-    return accumulator + (currentValue.paidPrice || 0) - (currentValue.treatmentPrice || 0);
-  }, 0);
 
-  return { balance, lastTreatment: treatments[0] };
+  return treatments[0];
 }
 
-export async function getTreatmentById(id: string): Promise<ITreatment> {
-  const result = await patientRepository.getTreatmentById(id);
-  return result?.treatments?.[0];
+export async function getTreatmentById(treatmentId: string): Promise<ITreatment> {
+  const patient = await patientRepository.getTreatmentById(treatmentId);
+  return patient?.treatments?.[0];
 }
 
 export async function createTreatment(patientId: string, treatment: ITreatment) {
