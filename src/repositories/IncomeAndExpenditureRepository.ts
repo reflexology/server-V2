@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import IncomeAndExpenditure, {
   IIncomeAndExpenditure,
   IIncomeAndExpenditureDocument,
@@ -17,14 +19,14 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
     return this.model.find({ createdBy: userId }).sort({ createdAt: -1 });
   }
 
-  getReport(startDate?: Date, endDate?: Date) {
+  getReport(userId: string, startDate?: Date, endDate?: Date) {
     const aggregations = [];
 
     if (startDate || endDate) {
       let createdAt = {};
       createdAt = startDate ? { $gte: new Date(startDate.toISOString()) } : {};
       createdAt = endDate ? { ...createdAt, $lt: new Date(endDate.toISOString()) } : createdAt;
-      aggregations.push({ $match: { createdAt: createdAt } });
+      aggregations.push({ $match: { createdAt: createdAt, createdBy: mongoose.Types.ObjectId(userId) } });
     }
     aggregations.push(
       {

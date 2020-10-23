@@ -5,8 +5,9 @@ export function getIncomesAndExpenditures(userId: string) {
   return incomeAndExpenditureRepository.getAllByUserId(userId);
 }
 
-export async function getReport(startDate?: string, endDate?: string) {
+export async function getReport(userId: string, startDate?: string, endDate?: string) {
   const result = await incomeAndExpenditureRepository.getReport(
+    userId,
     startDate ? new Date(startDate) : null,
     endDate ? new Date(endDate) : null
   );

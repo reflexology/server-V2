@@ -27,7 +27,7 @@ router.get<IdParam, Report, IIncomeAndExpenditure, { startDate: string; endDate:
   req,
   res
 ) {
-  const data = await incomeAndExpenditureManager.getReport(req.query.startDate, req.query.endDate);
+  const data = await incomeAndExpenditureManager.getReport(req.user._id, req.query.startDate, req.query.endDate);
 
   res.status(200).json(data);
 });
