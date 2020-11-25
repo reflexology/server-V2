@@ -120,6 +120,7 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
           ...(newReminders && { 'treatments.isReminderCompleted': { $eq: false } })
         }
       },
+      { $sort: { 'treatments.reminderDate': -1 } },
       {
         $project: {
           _id: 0,
