@@ -17,6 +17,7 @@ export interface ITreatment {
   reminderDate?: Date;
   isReminderCompleted?: boolean;
   createdBy?: string;
+  isDeleted?: boolean;
 }
 
 export interface ITreatmentSubDocument extends mongoose.Types.Subdocument, ITreatment {}
@@ -37,7 +38,8 @@ export const treatmentSchema = new Schema(
     isReminderCompleted: { type: Boolean, default: false },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.userTableName, required: true }, // TODO add error message
     diagnoses: [String],
-    treatmentType: { type: String, enum: ['Reflexology', 'Diet'], required: true } // TODO add error message
+    treatmentType: { type: String, enum: ['Reflexology', 'Diet'], required: true }, // TODO add error message
+    isDeleted: { type: Boolean }
   },
   { strict: false }
 );

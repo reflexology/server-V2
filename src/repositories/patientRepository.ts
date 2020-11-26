@@ -102,7 +102,7 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
 
   async deleteTreatment(treatmentId: string) {
     const patient = await Patient.findOne({ 'treatments._id': treatmentId });
-    patient.treatments.id(treatmentId).remove();
+    patient.treatments.id(treatmentId).set({ isDeleted: true });
     return patient.save();
   }
 

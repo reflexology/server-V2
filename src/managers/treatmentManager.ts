@@ -8,10 +8,9 @@ export function getTreatments(): any {
 export async function getTreatmentsByPatientId(patientId: string) {
   const patient = await patientRepository.getTreatmentsByPatientId(patientId);
 
-  // sort desc by treatment date
-  return patient.treatments.sort(
-    (treatmentA, treatmentB) => treatmentB.treatmentDate.getTime() - treatmentA.treatmentDate.getTime()
-  );
+  return patient.treatments
+    .filter(treatment => !treatment.isDeleted)
+    .sort((treatmentA, treatmentB) => treatmentB.treatmentDate.getTime() - treatmentA.treatmentDate.getTime());
 }
 
 export async function getLastTreatment(patientId: string) {
