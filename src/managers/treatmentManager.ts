@@ -35,9 +35,17 @@ export async function createTreatment(patientId: string, treatment: ITreatment) 
 }
 
 export async function updateTreatment(id: string, treatment: ITreatment) {
-  // todo update income if paid price changed.
   const patient = await patientRepository.updateTreatment(id, treatment);
-  return patient.treatments[patient.treatments.length - 1];
+  const updatedTreatment = patient.treatments[patient.treatments.length - 1];
+  if (treatment.paidPrice) {
+    const oldIncome = await incomeAndExpenditureRepository.updateIncomeFromTreatment(
+      updatedTreatment._id,
+      updatedTreatment.paidPrice
+    );
+    if (!oldIncome) incomeAndExpenditureRepository.createIncomeFromTreatment(patient, updatedTreatment);
+  }
+
+  return updatedTreatment;
 }
 
 export function deleteTreatment(id: string): any {

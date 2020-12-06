@@ -25,7 +25,8 @@ export enum Errors {
   CreatedByRequired = 'err_created_by_required',
 
   // treatment
-  TreatmentNumberRequired = 'err_treatment_number_required'
+  TreatmentNumberRequired = 'err_treatment_number_required',
+  TreatmentTypeRequired = 'err_treatment_type_required'
 }
 
 String.prototype.format = function (...values) {

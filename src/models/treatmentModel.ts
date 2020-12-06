@@ -36,9 +36,13 @@ export const treatmentSchema = new Schema(
     reminders: { type: String, trim: true },
     reminderDate: { type: Date },
     isReminderCompleted: { type: Boolean, default: false },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: Consts.db.userTableName, required: true }, // TODO add error message
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Consts.db.userTableName,
+      required: [true, Errors.CreatedByRequired]
+    },
     diagnoses: [String],
-    treatmentType: { type: String, enum: ['Reflexology', 'Diet'], required: true }, // TODO add error message
+    treatmentType: { type: String, enum: ['Reflexology', 'Diet'], required: [true, Errors.TreatmentTypeRequired] },
     isDeleted: { type: Boolean }
   },
   { strict: false }

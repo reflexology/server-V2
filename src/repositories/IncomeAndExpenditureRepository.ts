@@ -60,14 +60,20 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
       createdBy: treatment.createdBy,
       amount: treatment.paidPrice,
       note: patient.firstName + ' ' + patient.lastName,
-      description: 'treatment' // TODO
+      description: 'treatment'
     });
 
     income
       .save()
       .catch(err =>
-        logger.error('failed to save income after saving treatment, treatment id: {1}'.format(income.treatmentId), err)
+        logger.error('failed to save income after saving treatment, treatment id: {0}'.format(income.treatmentId), err)
       );
+  }
+
+  async updateIncomeFromTreatment(treatmentId: string, paidPrice: number) {
+    logger.info('updating income from treatment, treatment id: {0}'.format(treatmentId));
+
+    return this.model.findOneAndUpdate({ treatmentId: treatmentId }, { $set: { amount: paidPrice } });
   }
 }
 
