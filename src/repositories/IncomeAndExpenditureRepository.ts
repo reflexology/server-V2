@@ -22,13 +22,15 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
   getReport(userId: string, startDate?: Date, endDate?: Date) {
     const aggregations = [];
 
+    const match: Record<string, any> = { isDeleted: { $ne: true }, createdBy: mongoose.Types.ObjectId(userId) };
     if (startDate || endDate) {
       let createdAt = {};
       createdAt = startDate ? { $gte: new Date(startDate.toISOString()) } : {};
       createdAt = endDate ? { ...createdAt, $lt: new Date(endDate.toISOString()) } : createdAt;
-      aggregations.push({ $match: { createdAt: createdAt, createdBy: mongoose.Types.ObjectId(userId) } });
+      match['createdAt'] = createdAt;
     }
     aggregations.push(
+      { $match: match },
       {
         $project: {
           income: { $cond: [{ $gt: ['$amount', 0] }, '$amount', 0] },
@@ -74,6 +76,10 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
     logger.info('updating income from treatment, treatment id: {0}'.format(treatmentId));
 
     return this.model.findOneAndUpdate({ treatmentId: treatmentId }, { $set: { amount: paidPrice } });
+  }
+
+  delete(id: string) {
+    return this.model.findOneAndUpdate({ _id: id }, { $set: { isDeleted: true } });
   }
 }
 

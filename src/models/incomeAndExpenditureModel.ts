@@ -17,6 +17,7 @@ export interface IIncomeAndExpenditure {
   createdBy: string;
   isFromTreatment?: boolean;
   treatmentId?: string;
+  isDeleted?: boolean;
 }
 
 export interface IIncomeAndExpenditureDocument extends Document, IIncomeAndExpenditure {}
@@ -34,7 +35,8 @@ export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditure>({
   },
   treatmentId: {
     type: mongoose.Schema.Types.ObjectId // TODO
-  }
+  },
+  isDeleted: { type: Boolean }
 });
 
 const IncomeAndExpenditure = model<IIncomeAndExpenditureDocument>(
