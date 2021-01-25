@@ -23,14 +23,14 @@ router.get<never, IIncomeAndExpenditure[], IIncomeAndExpenditure>('/', async fun
  * Private
  * get income by id
  */
-router.get<IdParam, Report, IIncomeAndExpenditure, { startDate: string; endDate: string }>('/report', async function (
-  req,
-  res
-) {
-  const data = await incomeAndExpenditureManager.getReport(req.user._id, req.query.startDate, req.query.endDate);
+router.get<IdParam, Report, IIncomeAndExpenditure, { startDate: string; endDate: string }>(
+  '/report',
+  async function (req, res) {
+    const data = await incomeAndExpenditureManager.getReport(req.user._id, req.query.startDate, req.query.endDate);
 
-  res.status(200).json(data);
-});
+    res.status(200).json(data);
+  }
+);
 
 /**
  * Get /api/incomeAndExpenditure/:id

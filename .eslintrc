@@ -22,7 +22,9 @@
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "no-extend-native": "off",
-    "simple-import-sort/sort": "error",
-    "sort-imports": "off"
+    "sort-imports": "off",
+    "import/order": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   }
 }

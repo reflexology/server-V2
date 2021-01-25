@@ -8,4 +8,4 @@ const diagnosisRepository = new DiagnosisRepository();
 const incomeAndExpenditureRepository = new IncomeAndExpenditureRepository();
 const userRepository = new UserRepository();
 
-export { userRepository, patientRepository, diagnosisRepository, incomeAndExpenditureRepository };
+export { diagnosisRepository, incomeAndExpenditureRepository, patientRepository, userRepository };

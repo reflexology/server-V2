@@ -7,11 +7,11 @@ import * as treatmentManager from './treatmentManager';
 import * as userManager from './userManager';
 
 export {
-  userManager,
-  patientManager,
-  treatmentManager,
   diagnosisManager,
-  reminderManager,
+  fileManager,
   incomeAndExpenditureManager,
-  fileManager
+  patientManager,
+  reminderManager,
+  treatmentManager,
+  userManager
 };
