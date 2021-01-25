@@ -11,7 +11,7 @@ export interface IDiagnosis {
 
 export interface IDiagnosisDocument extends Document, IDiagnosis {}
 
-export const diagnosisSchema = new Schema({
+export const diagnosisSchema = new Schema<IDiagnosisDocument>({
   name: { type: String, trim: true },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,

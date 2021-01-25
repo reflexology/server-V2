@@ -11,7 +11,7 @@ class DiagnosisRepository extends BaseRepository<IDiagnosisDocument, IDiagnosis>
   }
 
   createMulti(diagnoses: IDiagnosis[]) {
-    return this.model.create(diagnoses);
+    return this.model.create(...diagnoses);
   }
 }
 

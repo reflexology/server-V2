@@ -22,7 +22,7 @@ export interface ITreatment {
 
 export interface ITreatmentSubDocument extends mongoose.Types.Subdocument, ITreatment {}
 
-export const treatmentSchema = new Schema(
+export const treatmentSchema = new Schema<ITreatmentSubDocument>(
   {
     treatmentDate: { type: Date, default: Date.now },
     referredBy: { type: String, trim: true },

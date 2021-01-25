@@ -22,7 +22,7 @@ export interface IIncomeAndExpenditure {
 
 export interface IIncomeAndExpenditureDocument extends Document, IIncomeAndExpenditure {}
 
-export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditure>({
+export const incomeAndExpenditureSchema = new Schema<IIncomeAndExpenditureDocument>({
   description: { type: String, trim: true, required: [true, Errors.IncomeOrExpenseDescriptionRequired] },
   note: { type: String, trim: true },
   amount: { type: Number, required: true },

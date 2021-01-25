@@ -10,8 +10,13 @@ export interface IUser {
 
 export interface IUserDocument extends Document, IUser {}
 
-export const UserSchema = new Schema({
-  username: { type: String, required: true, unique: [true, Errors.UserNameRequired], trim: true },
+export const UserSchema = new Schema<IUserDocument>({
+  username: {
+    type: String,
+    required: [true, Errors.UserNameRequired],
+    trim: true,
+    unique: true
+  },
   password: { type: String, required: [true, Errors.PasswordRequired], trim: true }
 });
 
