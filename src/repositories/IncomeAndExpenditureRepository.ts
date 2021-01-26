@@ -16,7 +16,7 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
   }
 
   getAllByUserId(userId: string) {
-    return this.model.find({ createdBy: userId }).sort({ createdAt: -1 });
+    return this.model.find({ createdBy: userId, isDeleted: null }).sort({ createdAt: -1 });
   }
 
   getReport(userId: string, startDate?: Date, endDate?: Date) {
