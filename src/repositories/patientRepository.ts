@@ -14,6 +14,21 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
     const inDebtOrInCreditOperator = inCredit ? '$gt' : '$lt';
 
     aggregate.push({ $match: { createdBy: mongoose.Types.ObjectId(userId) } });
+    aggregate.push({ $unwind: { path: '$treatments', preserveNullAndEmptyArrays: true } });
+    aggregate.push({ $match: { 'treatments.isDeleted': null } });
+
+    aggregate.push(
+      {
+        $group: {
+          _id: '$_id',
+          person: { $first: '$$ROOT' },
+          treatments: { $push: '$treatments' }
+        }
+      },
+      {
+        $replaceRoot: { newRoot: { $mergeObjects: ['$person', { treatments: '$treatments' }] } }
+      }
+    );
 
     aggregate.push({
       $addFields: {
@@ -67,7 +82,19 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
   // treatments operations
 
   getTreatmentsByPatientId(patientId: string) {
-    return this.getOneById(patientId, { treatments: 1, _id: 0 });
+    return this.model.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(patientId) } },
+      { $unwind: '$treatments' },
+      { $match: { 'treatments.isDeleted': null } },
+      { $sort: { 'treatments.treatmentDate': -1 } },
+      {
+        $group: {
+          _id: { id: '$_id' },
+          treatments: { $push: '$treatments' }
+        }
+      },
+      { $project: { treatments: 1, _id: -1 } }
+    ]);
   }
 
   async addTreatment(patientId: string, treatment: ITreatment) {
@@ -106,8 +133,11 @@ class PatientRepository extends BaseRepository<IPatientDocument, IPatient> {
 
   async deleteTreatment(treatmentId: string) {
     const patient = await Patient.findOne({ 'treatments._id': treatmentId });
-    patient.treatments.id(treatmentId).set({ isDeleted: true });
-    return patient.save();
+    const treatment = patient.treatments.id(treatmentId);
+    treatment.set({ isDeleted: true });
+    await patient.save();
+
+    return treatment;
   }
 
   // reminders operations

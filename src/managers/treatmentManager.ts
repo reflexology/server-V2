@@ -6,17 +6,15 @@ export function getTreatments(): any {
 }
 
 export async function getTreatmentsByPatientId(patientId: string) {
-  const patient = await patientRepository.getTreatmentsByPatientId(patientId);
+  const [{ treatments }] = await patientRepository.getTreatmentsByPatientId(patientId);
 
-  return patient.treatments
-    .filter(treatment => !treatment.isDeleted)
-    .sort((treatmentA, treatmentB) => treatmentB.treatmentDate.getTime() - treatmentA.treatmentDate.getTime());
+  return treatments;
 }
 
 export async function getLastTreatment(patientId: string) {
   const treatments = await getTreatmentsByPatientId(patientId);
 
-  return treatments[0];
+  return treatments?.[0];
 }
 
 export async function getTreatmentById(treatmentId: string): Promise<ITreatment> {
@@ -34,8 +32,8 @@ export async function createTreatment(patientId: string, treatment: ITreatment) 
   return newTreatment;
 }
 
-export async function updateTreatment(id: string, treatment: ITreatment) {
-  const patient = await patientRepository.updateTreatment(id, treatment);
+export async function updateTreatment(treatmentId: string, treatment: ITreatment) {
+  const patient = await patientRepository.updateTreatment(treatmentId, treatment);
   const updatedTreatment = patient.treatments[patient.treatments.length - 1];
   if (treatment.paidPrice) {
     const oldIncome = await incomeAndExpenditureRepository.updateIncomeFromTreatment(
@@ -48,6 +46,10 @@ export async function updateTreatment(id: string, treatment: ITreatment) {
   return updatedTreatment;
 }
 
-export function deleteTreatment(id: string): any {
-  return patientRepository.deleteTreatment(id);
+export async function deleteTreatment(treatmentId: string) {
+  const treatment = await patientRepository.deleteTreatment(treatmentId);
+
+  if (treatment.paidPrice) await incomeAndExpenditureRepository.deleteByTreatmentId(treatmentId);
+
+  return treatment;
 }

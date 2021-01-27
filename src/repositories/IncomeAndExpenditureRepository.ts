@@ -55,7 +55,7 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
   }
 
   createIncomeFromTreatment(patient: IPatientDocument, treatment: ITreatmentSubDocument) {
-    logger.info('creating income from treatment, treatment id: {1}'.format(treatment._id));
+    logger.info('creating income from treatment, treatment id: {0}'.format(treatment._id));
     const income = new IncomeAndExpenditure({
       isFromTreatment: true,
       treatmentId: treatment._id,
@@ -80,6 +80,10 @@ class IncomeAndExpenditureRepository extends BaseRepository<IIncomeAndExpenditur
 
   delete(id: string) {
     return this.model.findOneAndUpdate({ _id: id }, { $set: { isDeleted: true } });
+  }
+
+  deleteByTreatmentId(treatmentId: string) {
+    return this.model.findOneAndUpdate({ treatmentId }, { $set: { isDeleted: true } });
   }
 }
 

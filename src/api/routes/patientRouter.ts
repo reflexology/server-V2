@@ -25,7 +25,6 @@ router.get<never, IPatient[], IPatient, { inDebt: boolean; inCredit: boolean }>(
  */
 router.get<IdParam, IPatient | ResErr, IPatient>('/byTreatmentId/:id', async function (req, res) {
   const patient = await patientManager.getPatientByTreatmentId(req.params.id);
-  console.log(patient);
 
   if (!patient) return res.status(400).json({ msg: Errors.PatientNotExist });
 
