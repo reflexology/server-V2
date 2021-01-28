@@ -6,9 +6,9 @@ export function getTreatments(): any {
 }
 
 export async function getTreatmentsByPatientId(patientId: string) {
-  const [{ treatments }] = await patientRepository.getTreatmentsByPatientId(patientId);
+  const results = await patientRepository.getTreatmentsByPatientId(patientId);
 
-  return treatments;
+  return results?.[0]?.treatments || [];
 }
 
 export async function getLastTreatment(patientId: string) {
